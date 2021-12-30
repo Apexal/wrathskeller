@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
+[ext_resource path="res://assets/rathskellar_blur_bg.jpg" type="Texture" id=2]
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -10,44 +11,71 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_top = 1.0
+[node name="RathskellarBlurBg" type="TextureRect" parent="."]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 76.0
-margin_top = -104.0
-margin_right = 41.0
-margin_bottom = -112.0
+margin_bottom = 67.0
+texture = ExtResource( 2 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -93.0
+margin_top = -237.0
+margin_right = 93.0
+margin_bottom = -95.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
-margin_right = 89.0
-margin_bottom = 20.0
+margin_right = 186.0
+margin_bottom = 44.0
+focus_neighbour_top = NodePath("../QuitButton")
+focus_neighbour_bottom = NodePath("../LevelSelectButton")
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Start"
 
 [node name="LevelSelectButton" type="Button" parent="VBoxContainer"]
-margin_top = 24.0
-margin_right = 89.0
-margin_bottom = 44.0
+margin_top = 48.0
+margin_right = 186.0
+margin_bottom = 93.0
+focus_neighbour_top = NodePath("../StartButton")
+focus_neighbour_bottom = NodePath("../QuitButton")
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Select Level"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
-margin_top = 48.0
-margin_right = 89.0
-margin_bottom = 68.0
+margin_top = 97.0
+margin_right = 186.0
+margin_bottom = 142.0
+focus_neighbour_top = NodePath("../LevelSelectButton")
+focus_neighbour_bottom = NodePath("../StartButton")
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Quit"
 
-[node name="Label" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
+margin_left = -35.0
 margin_top = -7.0
-margin_right = 20.0
+margin_right = 35.0
 margin_bottom = 7.0
 text = "Rathskellar"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelectButton" to="." method="_on_LevelSelectButton_pressed"]
