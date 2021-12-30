@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/rathskellar_blur_bg.jpg" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/default_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/fonts/title_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/audio/alma_mater.mp3" type="AudioStream" id=5]
 
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
@@ -82,6 +83,10 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/LevelSelectButton" to="." method="_on_LevelSelectButton_pressed"]

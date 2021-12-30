@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/alma_mater.mp3-124de57a42730c01d530fbd1c969d77e.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/alma_mater.mp3"
+dest_files=[ "res://.import/alma_mater.mp3-124de57a42730c01d530fbd1c969d77e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
