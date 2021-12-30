@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Menu.gd" type="Script" id=1]
 [ext_resource path="res://assets/rathskellar_blur_bg.jpg" type="Texture" id=2]
@@ -6,8 +6,21 @@
 [ext_resource path="res://assets/fonts/title_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/audio/alma_mater.mp3" type="AudioStream" id=5]
 
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.839216, 0, 0.109804, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.564706, 0.0392157, 0.109804, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.552941, 0, 0.0705882, 1 )
+
 [sub_resource type="Theme" id=1]
 default_font = ExtResource( 3 )
+Button/colors/font_color = Color( 1, 1, 1, 1 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 4 )
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
