@@ -54,15 +54,16 @@ position = Vector2( 2, 598 )
 position = Vector2( 514, 19 )
 shape = SubResource( 8 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="FloatingAaronHead" type="StaticBody2D" parent="."]
 position = Vector2( 921, 89 )
 script = ExtResource( 5 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloatingAaronHead"]
 shape = SubResource( 10 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="StaticBody2D"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="FloatingAaronHead"]
 position = Vector2( -3, 6 )
 scale = Vector2( 0.465447, 0.465447 )
 frames = SubResource( 9 )
+frame = 1
 playing = true
