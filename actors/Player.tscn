@@ -311,7 +311,7 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
+"update": 1,
 "values": [ Vector2( 4.336, 10.092 ) ]
 }
 tracks/2/type = "value"
@@ -323,8 +323,20 @@ tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -7, 71.2138 ) ]
+"update": 1,
+"values": [ Vector2( -8, -37.5851 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("FrankSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( -2, -107.81 ) ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -520,7 +532,7 @@ states/walk/node = SubResource( 45 )
 states/walk/position = Vector2( 647, -36 )
 transitions = [ "idle", "punch", SubResource( 17 ), "punch", "idle", SubResource( 18 ), "idle", "crouch", SubResource( 24 ), "crouch", "idle", SubResource( 25 ), "idle", "jump", SubResource( 26 ), "jump", "idle", SubResource( 27 ), "idle", "block", SubResource( 30 ), "block", "idle", SubResource( 31 ), "block", "hurt", SubResource( 34 ), "idle", "hurt", SubResource( 35 ), "crouch", "hurt", SubResource( 36 ), "jump", "hurt", SubResource( 37 ), "punch", "hurt", SubResource( 38 ), "hurt", "idle", SubResource( 43 ), "idle", "walk", SubResource( 46 ), "walk", "idle", SubResource( 47 ), "walk", "hurt", SubResource( 48 ) ]
 start_node = "idle"
-graph_offset = Vector2( -36, -58 )
+graph_offset = Vector2( -18, 11 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 

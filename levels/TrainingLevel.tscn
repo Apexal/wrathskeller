@@ -116,6 +116,7 @@ shape = SubResource( 10 )
 position = Vector2( -3, 6 )
 scale = Vector2( 0.465447, 0.465447 )
 frames = SubResource( 9 )
+frame = 1
 playing = true
 
 [node name="HitArea" type="Area2D" parent="FloatingAaronHead"]
