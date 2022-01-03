@@ -7,7 +7,7 @@ var _velocity := Vector2.ZERO
 const FLOOR_NORMAL = Vector2.UP
 export(Vector2) var speed := Vector2(150.0, 350.0)
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-onready var gravity = 1000.0
+onready var gravity = 900.0
 
 const NO_MOVE = -1
 var current_move_index := NO_MOVE
