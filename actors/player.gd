@@ -12,6 +12,8 @@ onready var gravity = 1000.0
 const NO_MOVE = -1
 var current_move_index := NO_MOVE
 
+var target_to_face: KinematicBody2D
+
 # Player selection variables
 export(String, "frank") var player_move_set := "frank" # Determines the available moves and animations
 export(int) var player_number := 1
@@ -19,6 +21,8 @@ export(int) var player_number := 1
 # Health variables
 export(float) var MAX_HEALTH = 100.0
 var health = MAX_HEALTH
+
+var facing_right := true
 
 # Moveset for the selected player, is set in _ready
 var moves
@@ -73,6 +77,12 @@ func determine_move_index():
 
 	return null
 
+func get_current_move():
+	if current_move_index == NO_MOVE:
+		return null
+	
+	return moves[current_move_index]
+
 func execute_move(move_index: int):
 	var move = moves[move_index]
 	current_move_index = move_index
@@ -82,6 +92,14 @@ func stop_current_move():
 	current_move_index = NO_MOVE
 
 func take_damage(damage_amount: float):
+	var current_move = get_current_move()
+	if current_move and current_move["type"] == PlayerMoves.BLOCK:
+		damage_amount *= 0.5
+	
+	# Knockback
+	_velocity.x = -100 if facing_right else 100
+	_velocity.y = -300
+	
 	print("player " + String(player_number) + " takes " + String(damage_amount) + " damage")
 	health -= damage_amount
 	if health < 0:
@@ -95,11 +113,16 @@ func _physics_process(delta):
 
 func _process(delta):
 	var current_node = state_machine.get_current_node()
-	print(current_node)
 	var input_direction = get_direction()
 	
 	_velocity = calculate_move_velocity(_velocity, input_direction, speed, false)
 	
+	# Always make sure to face the target, if set
+	if target_to_face:
+		if (facing_right and position.x > target_to_face.position.x) or (not facing_right and position.x < target_to_face.position.x):
+			facing_right = not facing_right
+			scale.x = -1
+		
 	if current_move_index == NO_MOVE:
 		if not is_on_floor():
 			state_machine.travel("jump")
@@ -120,5 +143,8 @@ func _process(delta):
 		execute_move(new_move_index)
 
 
-func _on_HitArea_body_entered(body):
+# When another body (probably a player) enters this player's hit area,
+# deal them the amount of damage that the current move deals.
+# This might be mitigated on their end by a block.
+func _on_HitArea_body_entered(body: Player):
 	body.take_damage(moves[current_move_index]["damage"])

@@ -593,7 +593,7 @@ states/walk/node = SubResource( 45 )
 states/walk/position = Vector2( 647, -36 )
 transitions = [ "idle", "punch", SubResource( 17 ), "punch", "idle", SubResource( 18 ), "idle", "crouch", SubResource( 24 ), "crouch", "idle", SubResource( 25 ), "idle", "jump", SubResource( 26 ), "jump", "idle", SubResource( 27 ), "idle", "block", SubResource( 30 ), "block", "idle", SubResource( 31 ), "block", "hurt", SubResource( 34 ), "idle", "hurt", SubResource( 35 ), "crouch", "hurt", SubResource( 36 ), "jump", "hurt", SubResource( 37 ), "punch", "hurt", SubResource( 38 ), "hurt", "idle", SubResource( 43 ), "idle", "walk", SubResource( 46 ), "walk", "idle", SubResource( 47 ), "walk", "hurt", SubResource( 48 ), "crouch", "crouch_walk", SubResource( 51 ), "crouch_walk", "crouch", SubResource( 52 ) ]
 start_node = "idle"
-graph_offset = Vector2( 30, 136 )
+graph_offset = Vector2( 8, -46 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
@@ -629,10 +629,11 @@ parameters/playback = SubResource( 14 )
 scale = Vector2( 0.376866, 0.372751 )
 texture = ExtResource( 1 )
 hframes = 9
+frame = 8
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
-position = Vector2( -15.5, 13.9093 )
-scale = Vector2( 2.649, 15.508 )
+position = Vector2( -11, 19.7816 )
+scale = Vector2( 2.886, 15.048 )
 shape = SubResource( 19 )
 
 [node name="HitArea" type="Area2D" parent="."]
