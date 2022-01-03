@@ -1,17 +1,26 @@
+extends KinematicBody2D
 class_name Player
-extends Actor
+signal hit
+signal health_changed
 
+var _velocity := Vector2.ZERO
+const FLOOR_NORMAL = Vector2.UP
+export(Vector2) var speed := Vector2(150.0, 350.0)
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+onready var gravity = 1000.0
 
-const IDLE = -1
+const NO_MOVE = -1
+var current_move_index := NO_MOVE
 
-var current_move_index := IDLE
-
-export(String, "frank") var player_move_set := "frank"
+# Player selection variables
+export(String, "frank") var player_move_set := "frank" # Determines the available moves and animations
 export(int) var player_number := 1
+
+# Health variables
 export(float) var MAX_HEALTH = 100.0
 var health = MAX_HEALTH
 
+# Moveset for the selected player, is set in _ready
 var moves
 
 func _ready():
@@ -34,7 +43,7 @@ func calculate_move_velocity(
 ):
 	var velocity = linear_velocity
 	
-	if current_move_index == IDLE and is_on_floor():
+	if current_move_index == NO_MOVE and is_on_floor():
 		velocity.x = speed.x * direction.x
 	elif is_on_floor():
 		velocity.x = 0
@@ -48,7 +57,7 @@ func calculate_move_velocity(
 	return velocity
 
 func determine_move_index():
-	if current_move_index == IDLE:
+	if current_move_index == NO_MOVE:
 		for i in len(moves):
 			var move = moves[i]
 			
@@ -70,23 +79,36 @@ func execute_move(move_index: int):
 	state_machine.travel(move["animation_name"])
 
 func stop_current_move():
-	current_move_index = IDLE
-	state_machine.travel("idle")
+	current_move_index = NO_MOVE
 
 func take_damage(damage_amount: float):
+	print("player " + String(player_number) + " takes " + String(damage_amount) + " damage")
 	health -= damage_amount
 	if health < 0:
 		health = 0
-	emit_signal("health_changed", health)
+	state_machine.travel("hurt")
+	emit_signal("health_changed", player_number, health)
 
 func _physics_process(delta):
-	var input_direction = get_direction()
-	
-	_velocity = calculate_move_velocity(_velocity, input_direction, speed, false)
+	_velocity.y += gravity * delta
 	move_and_slide(_velocity, FLOOR_NORMAL)
 
 func _process(delta):
-	if current_move_index != IDLE and state_machine.get_current_node() == "idle":
+	var current_node = state_machine.get_current_node()
+	var input_direction = get_direction()
+	
+	_velocity = calculate_move_velocity(_velocity, input_direction, speed, false)
+	
+	if current_move_index == NO_MOVE:
+		if Input.is_action_pressed("player_1_down"):
+			state_machine.travel("crouch")
+		elif _velocity.x == 0:
+			state_machine.travel("idle")
+		else:
+			state_machine.travel("walk")
+
+	# When move animation is over, end move
+	if current_move_index != NO_MOVE and current_node != moves[current_move_index]["animation_name"]:
 		stop_current_move()
 	
 	var new_move_index = determine_move_index()
@@ -94,5 +116,6 @@ func _process(delta):
 	if new_move_index != null:
 		execute_move(new_move_index)
 
-func _on_Enemy_area_entered(area):
-	print("OUCH")
+
+func _on_HitArea_body_entered(body):
+	body.take_damage(moves[current_move_index]["damage"])
