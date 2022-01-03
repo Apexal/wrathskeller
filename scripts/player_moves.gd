@@ -17,13 +17,13 @@ const baseMoves = [
 		"inputs": ["attack"],
 		"damage": 5.0
 	},
-#	{
-#		"name": "Taunt",
-#		"type": TAUNT,
-#		"animation_name": "taunt1",
-#		"inputs": ["taunt"],
-#		"damage": 1.0
-#	}
+	{
+		"name": "Kick",
+		"type": ATTACK,
+		"animation_name": "kick",
+		"inputs": ["special"],
+		"damage": 10.0
+	}
 ]
 
 # Custom moves

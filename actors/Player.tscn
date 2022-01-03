@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://assets/frank2.png" type="Texture" id=1]
 [ext_resource path="res://actors/player.gd" type="Script" id=2]
@@ -89,6 +89,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("FrankSprite:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.376866, 0.372751 ) ]
+}
 
 [sub_resource type="Animation" id=28]
 resource_name = "block"
@@ -127,7 +139,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -11, 19.7816 ) ]
+"values": [ Vector2( -11, 20 ) ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -259,7 +271,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -11, 19.7816 ) ]
+"values": [ Vector2( -11, 20 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("BodyCollider:scale")
@@ -336,7 +348,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -11, 19.7816 ) ]
+"values": [ Vector2( -11, 20 ) ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -376,7 +388,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Vector2( -8, -37.5851 ) ]
+"values": [ Vector2( -8, -37 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("FrankSprite:position")
@@ -389,6 +401,94 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ Vector2( -2, -107.81 ) ]
+}
+
+[sub_resource type="Animation" id=53]
+resource_name = "kick"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("FrankSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 4.94537 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FrankSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.376866, 0.372751 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("FrankSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("BodyCollider:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -42, 20 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("BodyCollider:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2.622, 14.917 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("HitArea/HitCollider:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 128, 67.2575 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("HitArea/HitCollider:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -440,7 +540,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -16, 14.8362 ), Vector2( -1, 17.8035 ) ]
+"values": [ Vector2( -16, 20 ), Vector2( -1, 20 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("BodyCollider:scale")
@@ -491,7 +591,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0.2 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -11, 19.7816 ) ]
+"values": [ Vector2( -11, 20 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("BodyCollider:scale")
@@ -523,6 +623,9 @@ animation = "idle"
 
 [sub_resource type="AnimationNodeAnimation" id=23]
 animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=54]
+animation = "kick"
 
 [sub_resource type="AnimationNodeAnimation" id=16]
 animation = "punch"
@@ -574,6 +677,18 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=52]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=55]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=56]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=57]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=58]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=59]
+
 [sub_resource type="AnimationNodeStateMachine" id=13]
 states/block/node = SubResource( 29 )
 states/block/position = Vector2( 420, 145 )
@@ -587,20 +702,22 @@ states/idle/node = SubResource( 15 )
 states/idle/position = Vector2( 647, 145 )
 states/jump/node = SubResource( 23 )
 states/jump/position = Vector2( 880, 303 )
+states/kick/node = SubResource( 54 )
+states/kick/position = Vector2( 1234, 303 )
 states/punch/node = SubResource( 16 )
 states/punch/position = Vector2( 880, 145 )
 states/walk/node = SubResource( 45 )
 states/walk/position = Vector2( 647, -36 )
-transitions = [ "idle", "punch", SubResource( 17 ), "punch", "idle", SubResource( 18 ), "idle", "crouch", SubResource( 24 ), "crouch", "idle", SubResource( 25 ), "idle", "jump", SubResource( 26 ), "jump", "idle", SubResource( 27 ), "idle", "block", SubResource( 30 ), "block", "idle", SubResource( 31 ), "block", "hurt", SubResource( 34 ), "idle", "hurt", SubResource( 35 ), "crouch", "hurt", SubResource( 36 ), "jump", "hurt", SubResource( 37 ), "punch", "hurt", SubResource( 38 ), "hurt", "idle", SubResource( 43 ), "idle", "walk", SubResource( 46 ), "walk", "idle", SubResource( 47 ), "walk", "hurt", SubResource( 48 ), "crouch", "crouch_walk", SubResource( 51 ), "crouch_walk", "crouch", SubResource( 52 ) ]
+transitions = [ "idle", "punch", SubResource( 17 ), "punch", "idle", SubResource( 18 ), "idle", "crouch", SubResource( 24 ), "crouch", "idle", SubResource( 25 ), "idle", "jump", SubResource( 26 ), "jump", "idle", SubResource( 27 ), "idle", "block", SubResource( 30 ), "block", "idle", SubResource( 31 ), "block", "hurt", SubResource( 34 ), "idle", "hurt", SubResource( 35 ), "crouch", "hurt", SubResource( 36 ), "jump", "hurt", SubResource( 37 ), "punch", "hurt", SubResource( 38 ), "hurt", "idle", SubResource( 43 ), "idle", "walk", SubResource( 46 ), "walk", "idle", SubResource( 47 ), "walk", "hurt", SubResource( 48 ), "crouch", "crouch_walk", SubResource( 51 ), "crouch_walk", "crouch", SubResource( 52 ), "idle", "kick", SubResource( 55 ), "kick", "idle", SubResource( 56 ), "jump", "kick", SubResource( 57 ), "kick", "jump", SubResource( 58 ), "punch", "jump", SubResource( 59 ) ]
 start_node = "idle"
-graph_offset = Vector2( 8, -46 )
+graph_offset = Vector2( 35, -31 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
 [sub_resource type="RectangleShape2D" id=19]
 
 [sub_resource type="CircleShape2D" id=9]
-radius = 15.7942
+radius = 30.0651
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 100, 394 )
@@ -616,6 +733,7 @@ anims/crouch_walk = SubResource( 49 )
 anims/hurt = SubResource( 32 )
 anims/idle = SubResource( 10 )
 anims/jump = SubResource( 21 )
+anims/kick = SubResource( 53 )
 anims/punch = SubResource( 12 )
 anims/walk = SubResource( 44 )
 
@@ -629,11 +747,10 @@ parameters/playback = SubResource( 14 )
 scale = Vector2( 0.376866, 0.372751 )
 texture = ExtResource( 1 )
 hframes = 9
-frame = 8
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
-position = Vector2( -11, 19.7816 )
-scale = Vector2( 2.886, 15.048 )
+position = Vector2( -15.5, 13.9093 )
+scale = Vector2( 2.649, 15.508 )
 shape = SubResource( 19 )
 
 [node name="HitArea" type="Area2D" parent="."]

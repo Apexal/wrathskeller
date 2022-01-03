@@ -23,6 +23,12 @@ export(float) var MAX_HEALTH = 100.0
 var health = MAX_HEALTH
 
 var facing_right := true
+var is_jumping := false
+var attack_cool_down := 0.25
+var damage_cool_down := 0.25
+
+var time_since_last_attack := attack_cool_down
+var time_since_last_damage := damage_cool_down
 
 # Moveset for the selected player, is set in _ready
 var moves
@@ -55,6 +61,7 @@ func calculate_move_velocity(
 	if direction.y != 0.0:
 		velocity.y = speed.y * direction.y
 	if is_jump_interrupted:
+#		is_jumping = false
 		# Decrease the Y velocity by multiplying it, but don't set it to 0
 		# as to not be too abrupt.
 		velocity.y *= 0.6
@@ -90,15 +97,21 @@ func execute_move(move_index: int):
 
 func stop_current_move():
 	current_move_index = NO_MOVE
+	time_since_last_attack = 0
 
 func take_damage(damage_amount: float):
+	if time_since_last_damage < damage_cool_down:
+		return
+	
 	var current_move = get_current_move()
 	if current_move and current_move["type"] == PlayerMoves.BLOCK:
 		damage_amount *= 0.5
 	
 	# Knockback
-	_velocity.x = -100 if facing_right else 100
-	_velocity.y = -300
+	_velocity.x = -200 if facing_right else 200
+	_velocity.y = -250
+	
+	time_since_last_damage = 0
 	
 	print("player " + String(player_number) + " takes " + String(damage_amount) + " damage")
 	health -= damage_amount
@@ -114,7 +127,7 @@ func _physics_process(delta):
 func _process(delta):
 	var current_node = state_machine.get_current_node()
 	var input_direction = get_direction()
-	
+
 	_velocity = calculate_move_velocity(_velocity, input_direction, speed, false)
 	
 	# Always make sure to face the target, if set
@@ -125,7 +138,8 @@ func _process(delta):
 		
 	if current_move_index == NO_MOVE:
 		if not is_on_floor():
-			state_machine.travel("jump")
+			pass
+#			state_machine.travel("jump")
 		elif Input.is_action_pressed("player_" + String(player_number) + "_down"):
 			state_machine.travel("crouch" if _velocity.x == 0 else "crouch_walk")
 		elif _velocity.x == 0:
@@ -137,9 +151,14 @@ func _process(delta):
 	if current_move_index != NO_MOVE and current_node != moves[current_move_index]["animation_name"]:
 		stop_current_move()
 	
+	if current_move_index == NO_MOVE:
+		time_since_last_attack += delta
+		
+	time_since_last_damage += delta
+	
 	var new_move_index = determine_move_index()
 	
-	if new_move_index != null:
+	if new_move_index != null and time_since_last_attack >= attack_cool_down:
 		execute_move(new_move_index)
 
 
@@ -147,4 +166,5 @@ func _process(delta):
 # deal them the amount of damage that the current move deals.
 # This might be mitigated on their end by a block.
 func _on_HitArea_body_entered(body: Player):
-	body.take_damage(moves[current_move_index]["damage"])
+	if body and body.has_method("take_damage"):
+		body.take_damage(moves[current_move_index]["damage"])
