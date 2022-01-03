@@ -100,7 +100,9 @@ func _process(delta):
 	_velocity = calculate_move_velocity(_velocity, input_direction, speed, false)
 	
 	if current_move_index == NO_MOVE:
-		if Input.is_action_pressed("player_1_down"):
+		if not is_on_floor():
+			state_machine.travel("jump")
+		elif Input.is_action_pressed("player_" + String(player_number) + "_down"):
 			state_machine.travel("crouch")
 		elif _velocity.x == 0:
 			state_machine.travel("idle")
