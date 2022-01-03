@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Menu.gd" type="Script" id=1]
-[ext_resource path="res://assets/rathskellar_blur_bg.jpg" type="Texture" id=2]
+[ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
+[ext_resource path="res://assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/default_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/fonts/title_font.tres" type="DynamicFont" id=4]
 [ext_resource path="res://assets/audio/alma_mater.mp3" type="AudioStream" id=5]
@@ -58,12 +58,13 @@ __meta__ = {
 margin_right = 186.0
 margin_bottom = 44.0
 focus_neighbour_top = NodePath("../QuitButton")
-focus_neighbour_bottom = NodePath("../LevelSelectButton")
+focus_neighbour_bottom = NodePath("../TrainingButton")
 size_flags_horizontal = 3
 size_flags_vertical = 3
+disabled = true
 text = "Start"
 
-[node name="LevelSelectButton" type="Button" parent="VBoxContainer"]
+[node name="TrainingButton" type="Button" parent="VBoxContainer"]
 margin_top = 48.0
 margin_right = 186.0
 margin_bottom = 93.0
@@ -71,13 +72,13 @@ focus_neighbour_top = NodePath("../StartButton")
 focus_neighbour_bottom = NodePath("../QuitButton")
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Select Level"
+text = "Training"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer"]
 margin_top = 97.0
 margin_right = 186.0
 margin_bottom = 142.0
-focus_neighbour_top = NodePath("../LevelSelectButton")
+focus_neighbour_top = NodePath("../TrainingButton")
 focus_neighbour_bottom = NodePath("../StartButton")
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -102,5 +103,5 @@ stream = ExtResource( 5 )
 autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/LevelSelectButton" to="." method="_on_LevelSelectButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/TrainingButton" to="." method="_on_TrainingButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
