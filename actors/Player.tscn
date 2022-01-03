@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://assets/frank2.png" type="Texture" id=1]
 [ext_resource path="res://actors/player.gd" type="Script" id=2]
@@ -132,6 +132,58 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=20]
 resource_name = "crouch"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BodyCollider:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 11, 91.9845 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("BodyCollider:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 3.517, 7.698 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("FrankSprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=49]
+resource_name = "crouch_walk"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("FrankSprite:frame")
@@ -460,6 +512,9 @@ animation = "block"
 [sub_resource type="AnimationNodeAnimation" id=22]
 animation = "crouch"
 
+[sub_resource type="AnimationNodeAnimation" id=50]
+animation = "crouch_walk"
+
 [sub_resource type="AnimationNodeAnimation" id=33]
 animation = "hurt"
 
@@ -515,11 +570,17 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=48]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+
 [sub_resource type="AnimationNodeStateMachine" id=13]
 states/block/node = SubResource( 29 )
 states/block/position = Vector2( 420, 145 )
 states/crouch/node = SubResource( 22 )
 states/crouch/position = Vector2( 420, 303 )
+states/crouch_walk/node = SubResource( 50 )
+states/crouch_walk/position = Vector2( 181, 303 )
 states/hurt/node = SubResource( 33 )
 states/hurt/position = Vector2( 647, 454 )
 states/idle/node = SubResource( 15 )
@@ -530,9 +591,9 @@ states/punch/node = SubResource( 16 )
 states/punch/position = Vector2( 880, 145 )
 states/walk/node = SubResource( 45 )
 states/walk/position = Vector2( 647, -36 )
-transitions = [ "idle", "punch", SubResource( 17 ), "punch", "idle", SubResource( 18 ), "idle", "crouch", SubResource( 24 ), "crouch", "idle", SubResource( 25 ), "idle", "jump", SubResource( 26 ), "jump", "idle", SubResource( 27 ), "idle", "block", SubResource( 30 ), "block", "idle", SubResource( 31 ), "block", "hurt", SubResource( 34 ), "idle", "hurt", SubResource( 35 ), "crouch", "hurt", SubResource( 36 ), "jump", "hurt", SubResource( 37 ), "punch", "hurt", SubResource( 38 ), "hurt", "idle", SubResource( 43 ), "idle", "walk", SubResource( 46 ), "walk", "idle", SubResource( 47 ), "walk", "hurt", SubResource( 48 ) ]
+transitions = [ "idle", "punch", SubResource( 17 ), "punch", "idle", SubResource( 18 ), "idle", "crouch", SubResource( 24 ), "crouch", "idle", SubResource( 25 ), "idle", "jump", SubResource( 26 ), "jump", "idle", SubResource( 27 ), "idle", "block", SubResource( 30 ), "block", "idle", SubResource( 31 ), "block", "hurt", SubResource( 34 ), "idle", "hurt", SubResource( 35 ), "crouch", "hurt", SubResource( 36 ), "jump", "hurt", SubResource( 37 ), "punch", "hurt", SubResource( 38 ), "hurt", "idle", SubResource( 43 ), "idle", "walk", SubResource( 46 ), "walk", "idle", SubResource( 47 ), "walk", "hurt", SubResource( 48 ), "crouch", "crouch_walk", SubResource( 51 ), "crouch_walk", "crouch", SubResource( 52 ) ]
 start_node = "idle"
-graph_offset = Vector2( -18, 11 )
+graph_offset = Vector2( 30, 136 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
@@ -551,6 +612,7 @@ speed = Vector2( 300, 500 )
 anims/RESET = SubResource( 11 )
 anims/block = SubResource( 28 )
 anims/crouch = SubResource( 20 )
+anims/crouch_walk = SubResource( 49 )
 anims/hurt = SubResource( 32 )
 anims/idle = SubResource( 10 )
 anims/jump = SubResource( 21 )

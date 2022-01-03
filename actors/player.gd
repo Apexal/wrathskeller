@@ -95,6 +95,7 @@ func _physics_process(delta):
 
 func _process(delta):
 	var current_node = state_machine.get_current_node()
+	print(current_node)
 	var input_direction = get_direction()
 	
 	_velocity = calculate_move_velocity(_velocity, input_direction, speed, false)
@@ -103,7 +104,7 @@ func _process(delta):
 		if not is_on_floor():
 			state_machine.travel("jump")
 		elif Input.is_action_pressed("player_" + String(player_number) + "_down"):
-			state_machine.travel("crouch")
+			state_machine.travel("crouch" if _velocity.x == 0 else "crouch_walk")
 		elif _velocity.x == 0:
 			state_machine.travel("idle")
 		else:
