@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/reers.png-aa016f059aa6f2622537adcc27ebabe3.stex"
+path="res://.import/open-mouth.png-7ca178360c3c3c0e1de87f0a7d0cdcd9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/actors/npcs/head/reers.png"
-dest_files=[ "res://.import/reers.png-aa016f059aa6f2622537adcc27ebabe3.stex" ]
+source_file="res://src/actors/npcs/head/sprites/open-mouth.png"
+dest_files=[ "res://.import/open-mouth.png-7ca178360c3c3c0e1de87f0a7d0cdcd9.stex" ]
 
 [params]
 

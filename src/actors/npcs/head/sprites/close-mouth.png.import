@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frank2.png-be3e021150e5871defdf9db4f533022c.stex"
+path="res://.import/close-mouth.png-1ae3160afc0c7a0c37d79d9885f99d29.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/actors/players/frank/frank2.png"
-dest_files=[ "res://.import/frank2.png-be3e021150e5871defdf9db4f533022c.stex" ]
+source_file="res://src/actors/npcs/head/sprites/close-mouth.png"
+dest_files=[ "res://.import/close-mouth.png-1ae3160afc0c7a0c37d79d9885f99d29.stex" ]
 
 [params]
 

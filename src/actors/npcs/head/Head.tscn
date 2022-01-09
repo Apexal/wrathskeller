@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://src/actors/npcs/head/reers2.png" type="Texture" id=1]
-[ext_resource path="res://src/actors/npcs/head/reers.png" type="Texture" id=2]
+[ext_resource path="res://src/actors/npcs/head/sprites/open-mouth.png" type="Texture" id=1]
+[ext_resource path="res://src/actors/npcs/head/sprites/close-mouth.png" type="Texture" id=2]
 [ext_resource path="res://src/actors/npcs/head/Head.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=10]
