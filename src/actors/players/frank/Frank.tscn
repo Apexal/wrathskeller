@@ -6,7 +6,7 @@
 [sub_resource type="Animation" id=11]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -66,7 +66,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.649, 15.508 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("FrankSprite:position")
+tracks/5/path = NodePath("Sprite:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -90,7 +90,7 @@ tracks/6/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("FrankSprite:scale")
+tracks/7/path = NodePath("Sprite:scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -106,7 +106,7 @@ tracks/7/keys = {
 resource_name = "block"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -146,7 +146,7 @@ tracks/2/keys = {
 resource_name = "crouch"
 length = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -182,7 +182,7 @@ tracks/2/keys = {
 "values": [ Vector2( 3.517, 7.698 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FrankSprite:position")
+tracks/3/path = NodePath("Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -198,7 +198,7 @@ tracks/3/keys = {
 resource_name = "crouch_walk"
 length = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -234,7 +234,7 @@ tracks/2/keys = {
 "values": [ Vector2( 3.517, 7.698 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FrankSprite:position")
+tracks/3/path = NodePath("Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -250,7 +250,7 @@ tracks/3/keys = {
 resource_name = "hurt"
 length = 0.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -303,7 +303,7 @@ resource_name = "idle"
 length = 0.4
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -315,7 +315,7 @@ tracks/0/keys = {
 "values": [ 7, 8 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("FrankSprite:position")
+tracks/1/path = NodePath("Sprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -355,7 +355,7 @@ tracks/3/keys = {
 resource_name = "jump"
 length = 0.8
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -391,7 +391,7 @@ tracks/2/keys = {
 "values": [ Vector2( -8, -37 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FrankSprite:position")
+tracks/3/path = NodePath("Sprite:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -407,7 +407,7 @@ tracks/3/keys = {
 resource_name = "kick"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:position")
+tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -419,7 +419,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 4.94537 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("FrankSprite:scale")
+tracks/1/path = NodePath("Sprite:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -431,7 +431,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0.376866, 0.372751 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("FrankSprite:frame")
+tracks/2/path = NodePath("Sprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -495,7 +495,7 @@ tracks/6/keys = {
 resource_name = "punch"
 length = 0.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -555,7 +555,7 @@ tracks/4/keys = {
 "values": [ Vector2( 2.622, 14.917 ), Vector2( 2.622, 14.917 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("FrankSprite:position")
+tracks/5/path = NodePath("Sprite:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -570,7 +570,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=44]
 resource_name = "walk"
 tracks/0/type = "value"
-tracks/0/path = NodePath("FrankSprite:frame")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -719,11 +719,12 @@ graph_offset = Vector2( 35, -31 )
 [sub_resource type="CircleShape2D" id=9]
 radius = 30.0651
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Frank" type="KinematicBody2D"]
 position = Vector2( 100, 394 )
 scale = Vector2( 1, 1.01104 )
 script = ExtResource( 2 )
 speed = Vector2( 300, 500 )
+player_name = "Frank"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 11 )
@@ -743,14 +744,15 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 14 )
 
-[node name="FrankSprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.376866, 0.372751 )
 texture = ExtResource( 1 )
 hframes = 9
+frame = 7
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
-position = Vector2( -15.5, 13.9093 )
-scale = Vector2( 2.649, 15.508 )
+position = Vector2( -11, 20 )
+scale = Vector2( 2.886, 15.048 )
 shape = SubResource( 19 )
 
 [node name="HitArea" type="Area2D" parent="."]
@@ -758,5 +760,3 @@ shape = SubResource( 19 )
 [node name="HitCollider" type="CollisionShape2D" parent="HitArea"]
 shape = SubResource( 9 )
 disabled = true
-
-[connection signal="body_entered" from="HitArea" to="." method="_on_HitArea_body_entered"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/scenes/training/empac_stage.jpg" type="Texture" id=1]
 [ext_resource path="res://src/scenes/training/TrainingLevel.gd" type="Script" id=2]
-[ext_resource path="res://src/actors/players/Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/actors/npcs/head/Head.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/actors/players/frank/Frank.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 511, 35.5 )
@@ -47,6 +48,8 @@ position = Vector2( 1065, -188 )
 position = Vector2( -20, -340 )
 rotation = 1.5708
 shape = SubResource( 8 )
+
+[node name="FloatingAaronHead" parent="." instance=ExtResource( 3 )]
 
 [node name="Player1StartPos" type="Position2D" parent="."]
 position = Vector2( 111, 338 )
