@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rathskellar_blur_bg.jpg-8fb2616e2d853a6daf16980eb7f807ce.stex"
+path="res://.import/reers2.png-7b58c7c2424d35279dad88b8c62c0a18.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/rathskellar_blur_bg.jpg"
-dest_files=[ "res://.import/rathskellar_blur_bg.jpg-8fb2616e2d853a6daf16980eb7f807ce.stex" ]
+source_file="res://src/actors/npcs/head/reers2.png"
+dest_files=[ "res://.import/reers2.png-7b58c7c2424d35279dad88b8c62c0a18.stex" ]
 
 [params]
 

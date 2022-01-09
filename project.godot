@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://actors/player.gd"
+"path": "res://src/actors/players/player.gd"
 } ]
 _global_script_class_icons={
 "Player": ""
@@ -22,12 +22,12 @@ _global_script_class_icons={
 
 config/name="Wrathskellar"
 config/description="Her Majesty Shirley has summoned you to fight in a grand tournament called in her honor - free tuition is the promised prize. Will you rise to the occasion?"
-run/main_scene="res://Menu.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://src/scenes/menu/Menu.tscn"
+config/icon="res://src/assets/icon.png"
 
 [autoload]
 
-PlayerMoves="*res://scripts/player_moves.gd"
+PlayerMoves="*res://src/scripts/player_moves.gd"
 
 [input]
 
@@ -126,4 +126,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_environment="res://assets/ui_theme.tres"
+environment/default_environment="res://src/assets/ui_theme.tres"

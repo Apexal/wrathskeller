@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
-[ext_resource path="res://assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
-[ext_resource path="res://assets/fonts/default_font.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/fonts/title_font.tres" type="DynamicFont" id=4]
-[ext_resource path="res://assets/audio/alma_mater.mp3" type="AudioStream" id=5]
+[ext_resource path="res://src/assets/audio/alma_mater.mp3" type="AudioStream" id=1]
+[ext_resource path="res://src/assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
+[ext_resource path="res://src/assets/fonts/title_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://src/assets/fonts/default_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/scenes/menu/Menu.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.839216, 0, 0.109804, 1 )
@@ -16,7 +16,7 @@ bg_color = Color( 0.564706, 0.0392157, 0.109804, 1 )
 bg_color = Color( 0.552941, 0, 0.0705882, 1 )
 
 [sub_resource type="Theme" id=1]
-default_font = ExtResource( 3 )
+default_font = ExtResource( 4 )
 Button/colors/font_color = Color( 1, 1, 1, 1 )
 Button/styles/hover = SubResource( 3 )
 Button/styles/normal = SubResource( 2 )
@@ -26,12 +26,12 @@ Button/styles/pressed = SubResource( 4 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 1 )
-script = ExtResource( 1 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RathskellarBlurBg" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 67.0
@@ -41,7 +41,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Buttons" type="VBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -54,32 +54,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
+[node name="Start" type="Button" parent="Buttons"]
 margin_right = 186.0
 margin_bottom = 44.0
-focus_neighbour_top = NodePath("../QuitButton")
-focus_neighbour_bottom = NodePath("../TrainingButton")
+focus_neighbour_top = NodePath("../Quit")
+focus_neighbour_bottom = NodePath("../Training")
 size_flags_horizontal = 3
 size_flags_vertical = 3
 disabled = true
 text = "Start"
 
-[node name="TrainingButton" type="Button" parent="VBoxContainer"]
+[node name="Training" type="Button" parent="Buttons"]
 margin_top = 48.0
 margin_right = 186.0
 margin_bottom = 93.0
-focus_neighbour_top = NodePath("../StartButton")
-focus_neighbour_bottom = NodePath("../QuitButton")
+focus_neighbour_top = NodePath("../Start")
+focus_neighbour_bottom = NodePath("../Quit")
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Training"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="Quit" type="Button" parent="Buttons"]
 margin_top = 97.0
 margin_right = 186.0
 margin_bottom = 142.0
-focus_neighbour_top = NodePath("../TrainingButton")
-focus_neighbour_bottom = NodePath("../StartButton")
+focus_neighbour_top = NodePath("../Training")
+focus_neighbour_bottom = NodePath("../Start")
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Quit"
@@ -93,7 +93,7 @@ margin_left = -177.5
 margin_top = -137.0
 margin_right = 177.5
 margin_bottom = -48.0
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 3 )
 text = "Wrathskellar"
 align = 1
 __meta__ = {
@@ -101,9 +101,9 @@ __meta__ = {
 }
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource( 1 )
 autoplay = true
 
-[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/TrainingButton" to="." method="_on_TrainingButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="Buttons/Start" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="Buttons/Training" to="." method="_on_TrainingButton_pressed"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="_on_QuitButton_pressed"]

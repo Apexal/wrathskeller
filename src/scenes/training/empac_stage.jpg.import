@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frank2.png-3bd06545ee2435dd5e8f8b52a61356f1.stex"
+path="res://.import/empac_stage.jpg-72e02d8cc4e8f15febb81ac0f63e40ce.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frank2.png"
-dest_files=[ "res://.import/frank2.png-3bd06545ee2435dd5e8f8b52a61356f1.stex" ]
+source_file="res://src/scenes/training/empac_stage.jpg"
+dest_files=[ "res://.import/empac_stage.jpg-72e02d8cc4e8f15febb81ac0f63e40ce.stex" ]
 
 [params]
 

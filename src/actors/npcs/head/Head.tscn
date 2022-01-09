@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://assets/reers2.png" type="Texture" id=1]
-[ext_resource path="res://assets/reers.png" type="Texture" id=2]
-[ext_resource path="res://levels/Enemy.gd" type="Script" id=3]
+[ext_resource path="res://src/actors/npcs/head/reers2.png" type="Texture" id=1]
+[ext_resource path="res://src/actors/npcs/head/reers.png" type="Texture" id=2]
+[ext_resource path="res://src/actors/npcs/head/Head.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 108.0
@@ -86,7 +86,6 @@ shape = SubResource( 10 )
 position = Vector2( -3, 6 )
 scale = Vector2( 0.465447, 0.465447 )
 frames = SubResource( 9 )
-frame = 1
 playing = true
 
 [node name="HitArea" type="Area2D" parent="."]

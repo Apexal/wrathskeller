@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/empac_stage.jpg-c3b2831e48398024cb95712ac3fd2686.stex"
+path="res://.import/rathskellar_blur_bg.jpg-2e12e23f512eb4df96031e97d4a9cf7d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/empac_stage.jpg"
-dest_files=[ "res://.import/empac_stage.jpg-c3b2831e48398024cb95712ac3fd2686.stex" ]
+source_file="res://src/assets/backgrounds/rathskellar_blur_bg.jpg"
+dest_files=[ "res://.import/rathskellar_blur_bg.jpg-2e12e23f512eb4df96031e97d4a9cf7d.stex" ]
 
 [params]
 

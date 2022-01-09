@@ -1,7 +1,7 @@
 [gd_scene load_steps=50 format=2]
 
-[ext_resource path="res://assets/frank2.png" type="Texture" id=1]
-[ext_resource path="res://actors/player.gd" type="Script" id=2]
+[ext_resource path="res://src/actors/players/frank/frank2.png" type="Texture" id=1]
+[ext_resource path="res://src/actors/players/player.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=11]
 length = 0.001

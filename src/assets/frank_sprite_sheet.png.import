@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/frank_sprite_sheet.png-a96042c96979f31f7088151c12c0f2d6.stex"
+path="res://.import/frank_sprite_sheet.png-10f19378e84b8f460122390bd543078d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/frank_sprite_sheet.png"
-dest_files=[ "res://.import/frank_sprite_sheet.png-a96042c96979f31f7088151c12c0f2d6.stex" ]
+source_file="res://src/assets/frank_sprite_sheet.png"
+dest_files=[ "res://.import/frank_sprite_sheet.png-10f19378e84b8f460122390bd543078d.stex" ]
 
 [params]
 

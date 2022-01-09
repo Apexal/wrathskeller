@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/reers2.png-ab01a5acd74b08280b2f39445d6a5cb4.stex"
+path="res://.import/frank2.png-be3e021150e5871defdf9db4f533022c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/reers2.png"
-dest_files=[ "res://.import/reers2.png-ab01a5acd74b08280b2f39445d6a5cb4.stex" ]
+source_file="res://src/actors/players/frank/frank2.png"
+dest_files=[ "res://.import/frank2.png-be3e021150e5871defdf9db4f533022c.stex" ]
 
 [params]
 
