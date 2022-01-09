@@ -20,7 +20,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Rathskellar"
+config/name="Wrathskellar"
+config/description="Her Majesty Shirley has summoned you to fight in a grand tournament called in her honor - free tuition is the promised prize. Will you rise to the occasion?"
 run/main_scene="res://Menu.tscn"
 config/icon="res://icon.png"
 

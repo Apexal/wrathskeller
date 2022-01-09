@@ -86,13 +86,15 @@ text = "Quit"
 
 [node name="Title" type="Label" parent="."]
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-margin_left = -156.5
-margin_top = 170.0
-margin_right = 156.5
-margin_bottom = 259.0
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -137.0
+margin_right = 177.5
+margin_bottom = -48.0
 custom_fonts/font = ExtResource( 4 )
-text = "Rathskellar"
+text = "Wrathskellar"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
