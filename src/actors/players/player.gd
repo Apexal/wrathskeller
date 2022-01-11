@@ -24,6 +24,13 @@ func _player_input(input_name: String) -> String:
 	return "player_" + String(player_number) + "_" + input_name
 
 func _get_input_direction() -> Vector2:
+	"""
+	Checks the currently activated inputs and represents them as a vector.
+	
+	x is horizontal
+	y+ is crouch
+	y- is jump
+	"""
 	return Vector2(
 		Input.get_action_strength(_player_input("move_right")) - Input.get_action_strength(_player_input("move_left")),
 		-1 if is_on_floor() and Input.is_action_just_pressed(_player_input("jump")) else (1.0 if Input.is_action_pressed(_player_input("down")) else 0.0)
@@ -53,9 +60,6 @@ func _handle_animation() -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
 	pass
 
-func _physics_process(delta: float) -> void:
-	pass
-
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
 	
@@ -63,5 +67,4 @@ func _process(delta: float) -> void:
 	
 	if _last_move_state != _current_move_state:
 		$State.text = String(_current_move_state)
-		print("new state {state}".format({"state": _current_move_state}))
 	_last_move_state = _current_move_state
