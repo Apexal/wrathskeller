@@ -30,7 +30,7 @@ position = Vector2( 2, 598 )
 [node name="StaticBody2D" type="StaticBody2D" parent="Floor"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2( 514, 19 )
+position = Vector2( 514, -5 )
 shape = SubResource( 8 )
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Floor"]
@@ -56,24 +56,3 @@ position = Vector2( 111, 338 )
 
 [node name="Player2StartPos" type="Position2D" parent="."]
 position = Vector2( 885, 335 )
-
-[node name="Player1HealthBar" type="ColorRect" parent="."]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 120.0
-margin_bottom = 40.0
-color = Color( 0.0745098, 0.6, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Player2HealthBar" type="ColorRect" parent="."]
-margin_left = 916.0
-margin_top = 20.0
-margin_right = 1016.0
-margin_bottom = 40.0
-grow_horizontal = 0
-color = Color( 0.0745098, 0.6, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}

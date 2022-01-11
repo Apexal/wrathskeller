@@ -6,7 +6,7 @@ onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["p
 export(String) var player_name := ""
 export(int) var player_number := 1
 
-var _damage_cool_down := 0.25
+var _damage_cool_down := 0.25 # How many seconds after being damaged are you invincible
 
 func _ready():
 	pass

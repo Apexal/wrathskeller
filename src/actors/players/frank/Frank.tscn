@@ -1,7 +1,8 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://src/actors/players/frank/sprites/frank2.png" type="Texture" id=1]
 [ext_resource path="res://src/actors/players/player.gd" type="Script" id=2]
+[ext_resource path="res://src/actors/attack.gd" type="Script" id=3]
 
 [sub_resource type="AnimationNodeAnimation" id=29]
 animation = "block"
@@ -151,8 +152,6 @@ shape = SubResource( 60 )
 
 [node name="HitCollider" type="CollisionShape2D" parent="HitArea"]
 modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 128, 67.2575 )
-scale = Vector2( 1, 1 )
 shape = SubResource( 61 )
 
 [node name="HurtArea" type="Area2D" parent="."]
@@ -165,5 +164,13 @@ shape = SubResource( 62 )
 [node name="Bottom" type="CollisionShape2D" parent="HurtArea"]
 modulate = Color( 0.301961, 0.298039, 0.988235, 1 )
 position = Vector2( -14.5, 36.596 )
-scale = Vector2( 1, 1 )
 shape = SubResource( 63 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Attacks" type="Node" parent="."]
+
+[node name="Attack1" type="Node" parent="Attacks"]
+script = ExtResource( 3 )
+per_character_audio = {
+}
