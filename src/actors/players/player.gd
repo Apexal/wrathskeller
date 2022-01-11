@@ -19,8 +19,12 @@ func _player_input(input_name: String) -> String:
 	"""Returns the input prefix for this player for a particular input."""
 	return "player_" + String(player_number) + "_" + input_name
 
+func _handle_animation():
+	"""Based on the previous state and current state, travel to the proper animation state."""
+	pass
+
 func _physics_process(delta):
 	pass
-	
+
 func _process(delta):
 	pass
