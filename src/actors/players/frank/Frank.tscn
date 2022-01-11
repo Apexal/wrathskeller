@@ -173,3 +173,13 @@ shape = SubResource( 63 )
 script = ExtResource( 3 )
 per_character_audio = {
 }
+
+[node name="State" type="Label" parent="."]
+margin_left = -34.0
+margin_top = -166.166
+margin_right = 6.0
+margin_bottom = -152.166
+text = "State"
+__meta__ = {
+"_edit_use_anchors_": false
+}
