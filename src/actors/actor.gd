@@ -21,7 +21,7 @@ var _is_alive := true # Always check this before doing things!
 var _velocity := Vector2.ZERO # Movement velocity
 
 var target_to_face: KinematicBody2D # If set, will always face this body
-var _is_facing_right := true # Used to determine when to flip to face target
+var _is_flipped := true # Used to determine when to flip to face target
 
 func take_damage(damage_amount: float) -> float:
 	"""
@@ -33,13 +33,15 @@ func take_damage(damage_amount: float) -> float:
 
 	if _is_alive:
 		return 0.0
-
+	
+	# Don't allow negative damage (healing)
 	if damage_amount < 0:
 		return _health
 	
 	_health -= damage_amount
 	emit_signal("health_changed", _health)
 	
+	# Detect DEATH
 	if _health <= 0:
 		_health = 0
 		_is_alive = false
@@ -50,8 +52,8 @@ func take_damage(damage_amount: float) -> float:
 func _face_target():
 	# Always make sure to face the target, if set
 	if target_to_face:
-		if (_is_facing_right and position.x > target_to_face.position.x) or (not _is_facing_right and position.x < target_to_face.position.x):
-			_is_facing_right = not _is_facing_right
+		if (_is_flipped and position.x > target_to_face.position.x) or (not _is_flipped and position.x < target_to_face.position.x):
+			_is_flipped = not _is_flipped
 			scale.x = -1
 
 func _physics_process(delta):
