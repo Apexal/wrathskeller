@@ -22,6 +22,8 @@ var _velocity := Vector2.ZERO # Movement velocity
 
 var target_to_face: KinematicBody2D # If set, will always face this body
 var _is_flipped := true # Used to determine when to flip to face target
+const _flip_delay := 0.25
+var _flip_timer := _flip_delay
 
 func take_damage(damage_amount: float) -> float:
 	"""
@@ -49,12 +51,15 @@ func take_damage(damage_amount: float) -> float:
 
 	return _health
 
-func _face_target():
+func _face_target(delta):
 	# Always make sure to face the target, if set
 	if target_to_face:
 		if (_is_flipped and position.x > target_to_face.position.x) or (not _is_flipped and position.x < target_to_face.position.x):
-			_is_flipped = not _is_flipped
-			scale.x = -1
+			_flip_timer -= delta
+			if _flip_timer <= 0.0:
+				_flip_timer = _flip_delay
+				_is_flipped = not _is_flipped
+				scale.x = -1
 
 func _physics_process(delta):
 	"""
@@ -63,6 +68,6 @@ func _physics_process(delta):
 	It applies gravity to the current velocity, applies the velocity, and faces the target. 
 	"""
 
+	_face_target(delta)
 	_velocity.y += gravity * delta
 	move_and_slide(_velocity, FLOOR_NORMAL)
-	_face_target()
