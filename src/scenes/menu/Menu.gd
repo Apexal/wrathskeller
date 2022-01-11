@@ -1,7 +1,9 @@
 extends Control
 
+onready var first_focus := $Buttons/Training
+
 func _ready():
-	$Buttons/Training.grab_focus()
+	first_focus.grab_focus()
 
 func _on_StartButton_pressed():
 #	get_tree().change_scene("res://levels/Level1.tscn")

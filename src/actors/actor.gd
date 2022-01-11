@@ -1,14 +1,13 @@
 class_name Actor
 extends KinematicBody2D
 
-# The direction of the floor, for move_and_slide
-const FLOOR_NORMAL = Vector2.UP
+const FLOOR_NORMAL = Vector2.UP # The direction of the floor, for move_and_slide
 
-export(Vector2) var speed := Vector2(150.0, 450.0) # x is walk speed, y is jump speed
-export(float) var gravity := 1300.0
-export(float) var max_health = 100.0
+export(Vector2) var speed := Vector2(150.0, 650.0) # x is walk speed, y is jump speed
+export(float) var gravity := 1500.0
+export(float) var max_health := 100.0
 
-var _health: float = max_health
+var _health := max_health
 var _is_alive := true
 
 var _velocity := Vector2.ZERO # Movement velocity
