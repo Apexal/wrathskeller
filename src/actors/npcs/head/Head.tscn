@@ -4,9 +4,8 @@
 [ext_resource path="res://src/actors/npcs/head/sprites/close-mouth.png" type="Texture" id=2]
 [ext_resource path="res://src/actors/npcs/head/Head.gd" type="Script" id=3]
 
-[sub_resource type="CapsuleShape2D" id=10]
-radius = 108.0
-height = 68.0
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 99.5, 111.5 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
@@ -79,8 +78,8 @@ position = Vector2( 921, 89 )
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 7.62939e-06 )
-shape = SubResource( 10 )
+position = Vector2( 5.5, 5.5 )
+shape = SubResource( 14 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -3, 6 )

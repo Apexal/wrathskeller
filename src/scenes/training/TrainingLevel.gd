@@ -15,6 +15,7 @@ func _ready():
 	player2.name = "Frank 2"
 	player2.player_number = 2
 	player2.position = $Player2StartPos.position
+	player2.modulate = Color("#ff0000")
 
 	player1.target_to_face = player2
 	player2.target_to_face = player1

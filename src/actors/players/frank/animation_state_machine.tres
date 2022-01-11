@@ -1,0 +1,20 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=5 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "crouch"
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=3]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=4]
+
+[resource]
+states/crouch/node = SubResource( 2 )
+states/crouch/position = Vector2( 557, 198 )
+states/idle/node = SubResource( 1 )
+states/idle/position = Vector2( 557, 81 )
+transitions = [ "idle", "crouch", SubResource( 3 ), "crouch", "idle", SubResource( 4 ) ]
+start_node = "idle"
+graph_offset = Vector2( -15, -64 )
