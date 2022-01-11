@@ -52,7 +52,7 @@ shape = SubResource( 8 )
 [node name="FloatingAaronHead" parent="." instance=ExtResource( 3 )]
 
 [node name="Player1StartPos" type="Position2D" parent="."]
-position = Vector2( 111, 338 )
+position = Vector2( 111, 51 )
 
 [node name="Player2StartPos" type="Position2D" parent="."]
 position = Vector2( 885, 335 )

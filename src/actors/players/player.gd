@@ -5,11 +5,11 @@ onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["p
 # Player selection variables
 export(int, 1, 2) var player_number := 1
 
-var _damage_cool_down := 0.25 # How many seconds after being damaged are you invincible
+const _damage_cool_down := 0.25 # How many seconds after being damaged are you invincible
 onready var _attacks := $Attacks.get_children() # Loads attacks from nodes
 
 func _ready():
-	print("{name} (Player {player_number}): Recognized {attack_count} attacks".format({
+	print("Player {player_number} ({name}): Recognized {attack_count} attacks".format({
 		"name": name,
 		"player_number": player_number,
 		"attack_count": len(_attacks)
