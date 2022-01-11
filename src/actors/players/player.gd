@@ -3,7 +3,7 @@ extends Actor
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
 # Player selection variables
-export(int) var player_number := 1
+export(int, 1, 2) var player_number := 1
 
 var _damage_cool_down := 0.25 # How many seconds after being damaged are you invincible
 onready var _attacks := $Attacks.get_children() # Loads attacks from nodes
@@ -15,7 +15,7 @@ func _ready():
 		"attack_count": len(_attacks)
 	}))
 
-func player_input(input_name: String) -> String:
+func _player_input(input_name: String) -> String:
 	"""Returns the input prefix for this player for a particular input."""
 	return "player_" + String(player_number) + "_" + input_name
 

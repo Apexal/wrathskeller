@@ -128,7 +128,6 @@ extents = Vector2( 45.5, 106.821 )
 position = Vector2( 100, 394 )
 scale = Vector2( 1, 1.01104 )
 script = ExtResource( 2 )
-player_name = "Frank"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
