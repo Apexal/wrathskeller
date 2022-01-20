@@ -2,6 +2,8 @@ class_name Attack
 extends Node
 
 export(String) var animation_name := ""
+export(bool) var allowed_during_jump := true
+export(String) var jump_animation_name := ""
 export(Array, String) var inputs := []
 export(float, 0.0, 100.0) var damage := 10.0
 export(AudioStream) var default_audio

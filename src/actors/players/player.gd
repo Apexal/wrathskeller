@@ -5,12 +5,15 @@ onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["p
 # Player selection variables
 export(int, 1, 2) var player_number := 1
 
-const _damage_cool_down := 0.25 # How many seconds after being damaged are you invincible
+const DAMAGE_COOL_DOWN := 0.25 # How many seconds after being damaged are you invincible
 onready var _attacks := $Attacks.get_children() # Loads attacks from nodes
 
 enum MOVE_STATE {IDLING, WALKING, JUMPING, CROUCHING}
 var _current_move_state: int = MOVE_STATE.IDLING
 var _last_move_state: int = MOVE_STATE.IDLING
+
+const NO_ATTACK = -1
+var _current_attack_index := NO_ATTACK
 
 func _ready() -> void:
 	print("Player {player_number} ({name}): Recognized {attack_count} attacks".format({
@@ -35,12 +38,23 @@ func _get_input_direction() -> Vector2:
 		Input.get_action_strength(_player_input("move_right")) - Input.get_action_strength(_player_input("move_left")),
 		-1 if is_on_floor() and Input.is_action_just_pressed(_player_input("jump")) else (1.0 if Input.is_action_pressed(_player_input("down")) else 0.0)
 	)
-	
-	# (0, 1) crouch
-	# (0, -1) jump
-	# (0, 0) in air
-	# (0, 1) in air if holding down
  
+func _handle_attack() -> void:
+	if _current_attack_index == NO_ATTACK:
+		for i in len(_attacks):
+			var attack: Attack = _attacks[i]
+			var all_inputs_active := true
+			for input in attack.inputs:
+				print("checking " + _player_input(input))
+				if not Input.is_action_pressed(_player_input(input)):
+					all_inputs_active = false
+			
+			if all_inputs_active:
+				print(attack.name + " is active")
+				_current_attack_index = i
+				state_machine.travel(attack.animation_name)
+				break
+
 func _handle_movement(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
 	
@@ -78,6 +92,7 @@ func _handle_animation() -> void:
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
 	
+	_handle_attack()
 	_handle_movement(input_direction)
 	_handle_animation()
 	

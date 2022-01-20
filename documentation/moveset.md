@@ -4,13 +4,15 @@ Every player should implement all of the following moves, though they can vary w
 
 | move | inputs | modifiers |
 | - | - | - |
-| move left | left |
-| move right | right |
-| crouch | down |
+| move left | left | no jump
+| move right | right | no jump
+| crouch | down | no jump
 | jump | jump |
+| quick punch | left/right, attack | no jump
 | punch | attack |
 | punch up | up, attack |
-| crouch punch | down, attack |
-| kick | special |
-| kick up | up, special |
-| leg swipe | down, special |
+| crouch punch | down, attack | no jump
+| quick kick | left/right, special | no jump
+| kick | special | 
+| kick up | up, special | no jump
+| leg swipe | down, special | no jump

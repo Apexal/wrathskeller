@@ -182,7 +182,7 @@ position = Vector2( 0, 4.94537 )
 scale = Vector2( 0.376866, 0.372751 )
 texture = ExtResource( 1 )
 hframes = 9
-frame = 7
+frame = 8
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
 position = Vector2( -15, 21 )
@@ -202,6 +202,8 @@ disabled = true
 
 [node name="Attack1" type="Node" parent="Attacks"]
 script = ExtResource( 3 )
+animation_name = "crouch"
+inputs = [ "attack" ]
 per_character_audio = {
 }
 
