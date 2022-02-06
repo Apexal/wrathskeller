@@ -2,6 +2,9 @@ extends Control
 
 onready var first_focus := $Buttons/Training
 
+func _stop_bg_music():
+	$"/root/BackgroundMusic".stop()
+
 func _ready():
 	first_focus.grab_focus()
 
@@ -14,4 +17,5 @@ func _on_QuitButton_pressed():
 	get_tree().quit()
 
 func _on_TrainingButton_pressed():
+	_stop_bg_music()
 	get_tree().change_scene("res://src/scenes/training/TrainingLevel.tscn")
