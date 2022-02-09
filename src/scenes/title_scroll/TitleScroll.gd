@@ -5,8 +5,7 @@ export(float) var speed = 50.0
 onready var label: RichTextLabel = $Text
 
 func _change_scene():
-#	set_modulate(lerp(get_modulate(), Color(0,0,0,1), 0.2))
-#	if modulate == Color(0,0,0,1):
+	# TODO: determine how to fade to black before changing
 	get_tree().change_scene("res://src/scenes/menu/Menu.tscn")
 
 func _physics_process(delta):
@@ -15,6 +14,7 @@ func _physics_process(delta):
 	# Move label up by speed
 	label.rect_position = Vector2(label.rect_position.x, label.rect_position.y - speed * delta)
 	
+	# If label is off screen, it is done
 	if label.margin_bottom < 0:
 		_change_scene()
 
