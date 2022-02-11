@@ -22,6 +22,8 @@ In fighting games, you block by **moving in the opposite direction of your oppon
 Note that you can block while in the air and while you are crouching. You can **Crouch Block** by holding a direction that's opposite your opponent, **pointing diagonally downwards**. If you are on the left side, you would hold both "left" and "down" on the D-Pad simultaneously. If you are on the right side, you would hold "right" and "down" simultaneously.
 
 <img src="images/block.jpg"><br/>
+<img src="images/crouchBlock.jpg"><br/>
+
 
 ## Lows
 You can still hit your opponent while they are stand blocking by using **low attacks**. These attacks are aimed towards the opponent's legs, thereby allowing you to hit your opponent while they are moving in the opposite direction. Most low attacks are attacks done while crouching. Every character has a universal set of inputs for crouch attacks. A list of command inputs for doing low attacks can be found in the **Player Moveset**.
@@ -45,9 +47,14 @@ You can still hit your opponent while they are stand blocking by using **low att
    ## Launch 
    As I mentioned before, every character will have a "trip" that downs their opponent for a few seconds. This is done by crouching and pressing R1. While your character isn't crouching, pressing R1 would commence your Launch attack. Launches are **universal overheads**, meaning every character can use Launch as an overhead. The attack will have a **long startup**, possibly around 1.5 seconds. The main purpose of a Launch is an attack that's easier to react to than most attacks, but if it lands, it punishes your opponent for getting hit. That way, every character has an equal opportunity to exploit their opponent if they are crouch blocking too much. After landing a Launch, your opponent will get launched into the air with **increased air time**. Your opponent will **take increased damage** while they are in this **"launched state"**, giving you a reward by allowing you to deal free additional damage by doing a combo against your opponent in the air.   
    
+   ## Grabs 
+   Launches has a long startup, so your opponent could eventually react fast enough to block them. As such, a crucial move in most fighting games are **grabs**. Grabbing your opponent would deal a decent chunck of damage to your opponent even though they are blocking. Grabs are **unblockable**. We could even have Wrathspriter ask the user for custom grab animations. 
+   Grabs will only land if you are in front of the opponent's face. The input for grabs is **forward + R1**. For instance, let's say you are playing on the left, and your opponent is crouch blocking. If you push "Right" on the D-Pad, or move right on the joystick, and immediately press Launch, you would grab your opponent.
+   
    ## Burst 
    Every character will also have a Burst mechanic, which is essentially their "get out of jail for free" card. It will be **managed by a separate bar**, a Burst bar. When the Burst bar is full, if you press L2 **while you are in a combo** or you are getting hit, **your opponent will be launched towards the other side of the screen**. The Burst bar fills up slowly, and it fills up as you get hit and take damage. 
    You cannot use Bursts if your character gets hit by a **Super**. Use Bursts wisely if you think you are in a sticky situation.
+   
  
  # **Supers**
  "Supers" are devastating ultimate attacks that are unleashed via a specific input and sufficient bar resources. Supers are managed by a **"Super Bar"**, which increases as you land hits, block, or get hit. These Supers are different depending on your character's Major and Minor. The Super Bar is separated into two halves. Major Supers require the entire bar to be full, while Minor Supers can be done with half a Super Bar. 
