@@ -1,9 +1,11 @@
 extends Control
 
 onready var first_focus := $Buttons/Training
+onready var anim := $AnimationPlayer
 
 func _ready():
 	first_focus.grab_focus()
+	anim.play("upDown")
 
 func _on_StartButton_pressed():
 #	get_tree().change_scene("res://levels/Level1.tscn")

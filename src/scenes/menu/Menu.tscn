@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/assets/audio/alma_mater.mp3" type="AudioStream" id=1]
 [ext_resource path="res://src/assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
@@ -22,6 +22,22 @@ Button/colors/font_color = Color( 1, 1, 1, 1 )
 Button/styles/hover = SubResource( 3 )
 Button/styles/normal = SubResource( 2 )
 Button/styles/pressed = SubResource( 4 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "upDown"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationPlayer/Subtitle:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 335, 272 ), Vector2( 335, 260 ), Vector2( 335, 272 ) ]
+}
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -110,10 +126,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Subtitle" type="Label" parent="VBoxContainer"]
-margin_top = 93.0
-margin_right = 355.0
-margin_bottom = 114.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/upDown = SubResource( 5 )
+
+[node name="Subtitle" type="Label" parent="AnimationPlayer"]
+margin_left = 335.0
+margin_top = 272.0
+margin_right = 690.0
+margin_bottom = 293.006
 hint_tooltip = "Restart to see a new one!"
 mouse_filter = 1
 custom_colors/font_color = Color( 1, 0.909804, 0, 1 )
@@ -121,6 +141,9 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 align = 1
 uppercase = true
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="pressed" from="Buttons/Start" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="Buttons/Training" to="." method="_on_TrainingButton_pressed"]
