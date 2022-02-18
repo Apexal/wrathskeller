@@ -26,9 +26,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Wrathskellar"
+config/name="Wrathskeller"
 config/description="Her Majesty Shirley has summoned you to fight in a grand tournament called in her honor - free tuition is the promised prize. Will you rise to the occasion?"
-run/main_scene="res://src/scenes/title_scroll/TitleScroll.tscn"
+run/main_scene="res://src/scenes/menu/Menu.tscn"
 boot_splash/image="res://src/assets/rcos_red_lockup.png"
 boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://src/assets/icon.png"
