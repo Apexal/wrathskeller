@@ -37,6 +37,11 @@ config/icon="res://src/assets/icon.png"
 
 BackgroundMusic="*res://src/scenes/background_music/BackgroundMusic.tscn"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
 [input]
 
 player_1_attack={
