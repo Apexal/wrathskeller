@@ -84,7 +84,12 @@ func _handle_movement(input_dir: Vector2) -> void:
 
 func _handle_animation() -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
-	if _current_move_state == MOVE_STATE.IDLING or _current_move_state == MOVE_STATE.WALKING:
+	if _current_attack_index != NO_ATTACK: 
+		state_machine.travel(_attacks[_current_attack_index].animation_name)
+		yield(get_tree().create_timer(0.3), "timeout")
+		_current_attack_index = NO_ATTACK
+		state_machine.travel("idle")
+	elif _current_move_state == MOVE_STATE.IDLING or _current_move_state == MOVE_STATE.WALKING:
 		state_machine.travel("idle")
 	elif _current_move_state == MOVE_STATE.CROUCHING:
 		state_machine.travel("crouch")
