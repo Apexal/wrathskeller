@@ -11,7 +11,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-speed = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1000.0
@@ -21,14 +20,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Text" type="RichTextLabel" parent="."]
-margin_left = 130.0
-margin_top = 667.0
-margin_right = 893.0
-margin_bottom = 967.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 52.0
+margin_top = 37.0
+margin_right = 946.0
+margin_bottom = 27662.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_bottom = 27625.0
+
+[node name="Text" type="RichTextLabel" parent="HBoxContainer/VBoxContainer"]
+margin_bottom = 27625.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
 custom_fonts/normal_font = ExtResource( 3 )
+tab_size = 5
 text = "*The year is 2021*
 
 Not so long ago in a small village upstate not so far away...
@@ -37,7 +48,7 @@ Empress Shirley decided to release her iron grip on RPI and step down from her t
 
 However, she will not depart without first enacting her last mandate upon her subjects...
 
-Her Majesty Shirley has summoned you to fight in a grand tournament called in her honor
+Her Majesty Shirley has summoned you to fight in a last grand tournament called in her honor
 - free tuition is the promised prize.
 
 Will you rise to the occasion?"
