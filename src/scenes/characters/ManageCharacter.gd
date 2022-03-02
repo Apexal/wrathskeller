@@ -9,7 +9,7 @@ func _create_character(character_data: Dictionary):
 	character_root.name = character_data["name"]
 	return character_root
 
-func _save_character(character_node):
+func _serialize_character(character_node):
 	var scene = PackedScene.new()
 	var result = scene.pack(character_node)
 	if result == OK:
@@ -18,12 +18,8 @@ func _save_character(character_node):
 			print(error)
 			push_error("An error occurred while saving the character to disk.")
 
-func _on_Import_pressed():
-	_save_character(_create_character({ 
-		"name": "No"
-	}))
-
-func _ready():
+func _deserialize_characters():
+	var characters = []
 	var dir = Directory.new()
 	if dir.open("user://") == OK:
 		dir.list_dir_begin()
@@ -32,7 +28,15 @@ func _ready():
 			if not dir.current_is_dir():
 				if file_name.ends_with(".scn"):
 					var character = load("user://" + file_name).instance()
-					var label = Label.new()
-					label.text = character.name
-					$GridContainer.add_child(label)
+					characters.append(character)
 			file_name = dir.get_next()
+	
+	return characters
+
+func _on_Import_pressed():
+	_serialize_character(_create_character({ 
+		"name": "No"
+	}))
+
+func _ready():
+	pass
