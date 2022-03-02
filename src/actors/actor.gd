@@ -69,5 +69,5 @@ func _physics_process(delta):
 	"""
 
 	_face_target(delta)
-	_velocity.y += gravity * delta
+	_velocity.y += gravity
 	move_and_slide(_velocity, FLOOR_NORMAL)
