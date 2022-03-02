@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
+[ext_resource path="res://src/scenes/menu/Title.gd" type="Script" id=1]
 [ext_resource path="res://src/assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
 [ext_resource path="res://src/assets/fonts/title_font.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/assets/fonts/default_font.tres" type="DynamicFont" id=4]
@@ -117,6 +118,7 @@ margin_bottom = 89.0
 custom_fonts/font = ExtResource( 3 )
 text = "Wrathskeller"
 align = 1
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
