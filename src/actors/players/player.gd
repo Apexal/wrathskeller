@@ -45,18 +45,27 @@ func _handle_attack() -> void:
 			var attack: Attack = _attacks[i]
 			var all_inputs_active := true
 			for input in attack.inputs:
-				print("checking " + _player_input(input))
 				if not Input.is_action_pressed(_player_input(input)):
 					all_inputs_active = false
 			
+			# If all inputs for this move are active, make it the current attack
 			if all_inputs_active:
-				print(attack.name + " is active")
 				_current_attack_index = i
-				state_machine.travel(attack.animation_name)
-				break
+				break # No need to continue looping
+		
+		# If a new move has been chosen, pause and then reset the move state
+		if _current_attack_index != NO_ATTACK:
+			yield(get_tree().create_timer(0.5), "timeout")
+			_current_attack_index = NO_ATTACK
 
 func _handle_movement(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
+	
+	if _current_attack_index != NO_ATTACK:
+		# Prevent moving when attacking unless midair
+		if is_on_floor():
+			_velocity.x = 0		
+		return
 	
 	if input_dir.y == -1: # If attempting to JUMP
 		if _current_move_state != MOVE_STATE.CROUCHING:
@@ -86,9 +95,6 @@ func _handle_animation() -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
 	if _current_attack_index != NO_ATTACK: 
 		state_machine.travel(_attacks[_current_attack_index].animation_name)
-		yield(get_tree().create_timer(0.3), "timeout")
-		_current_attack_index = NO_ATTACK
-		state_machine.travel("idle")
 	elif _current_move_state == MOVE_STATE.IDLING or _current_move_state == MOVE_STATE.WALKING:
 		state_machine.travel("idle")
 	elif _current_move_state == MOVE_STATE.CROUCHING:
@@ -96,11 +102,11 @@ func _handle_animation() -> void:
 
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
-	
+
 	_handle_attack()
 	_handle_movement(input_direction)
 	_handle_animation()
 	
-	if _last_move_state != _current_move_state:
-		$State.text = String(_current_move_state)
-	_last_move_state = _current_move_state
+	$State.text = "Move: " + String(_current_move_state)
+	$Attack.text = "Attack: " + String(_current_attack_index)
+	

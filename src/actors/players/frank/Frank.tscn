@@ -281,7 +281,6 @@ shape = SubResource( 60 )
 [node name="HitCollider" type="CollisionShape2D" parent="HitArea"]
 modulate = Color( 1, 0, 0, 1 )
 position = Vector2( 106, -80.1155 )
-scale = Vector2( 1, 1 )
 shape = SubResource( 61 )
 disabled = true
 
@@ -293,13 +292,16 @@ disabled = true
 script = ExtResource( 3 )
 animation_name = "crouch"
 inputs = [ "attack" ]
-per_character_audio = {
-}
 
-[node name="LightPunch" type="Node" parent="Attacks"]
-script = ExtResource( 3 )
-animation_name = "LightPunch"
-inputs = [ "lightpunch" ]
+[node name="Attack" type="Label" parent="."]
+margin_left = -35.0
+margin_top = -145.395
+margin_right = 5.0
+margin_bottom = -131.395
+text = "Attack"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="State" type="Label" parent="."]
 margin_left = -34.0
