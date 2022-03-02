@@ -55,13 +55,13 @@ func _start_attack(attack_index: int):
 
 func _determine_movement(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
-	
+
 	if _current_attack_index != NO_ATTACK:
 		# Prevent moving when attacking unless midair
 		if is_on_floor():
 			_velocity.x = 0		
 		return
-	
+
 	if input_dir.y == -1: # If attempting to JUMP
 		if _current_move_state != MOVE_STATE.CROUCHING:
 			# Only jump if not crouching
@@ -86,13 +86,13 @@ func _determine_movement(input_dir: Vector2) -> void:
 			_velocity.x = 0.0
 			_current_move_state = MOVE_STATE.IDLING
 
-func _determine_animation() -> void:
+func _determine_animation(move_state: int, attack_index: int) -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
-	if _current_attack_index != NO_ATTACK: 
-		state_machine.travel(_attacks[_current_attack_index].animation_name)
-	elif _current_move_state == MOVE_STATE.IDLING or _current_move_state == MOVE_STATE.WALKING:
+	if attack_index != NO_ATTACK: 
+		state_machine.travel(_attacks[attack_index].animation_name)
+	elif move_state == MOVE_STATE.IDLING or move_state == MOVE_STATE.WALKING:
 		state_machine.travel("idle")
-	elif _current_move_state == MOVE_STATE.CROUCHING:
+	elif move_state == MOVE_STATE.CROUCHING:
 		state_machine.travel("crouch")
 
 func _process(delta: float) -> void:
@@ -100,8 +100,8 @@ func _process(delta: float) -> void:
 
 	_determine_attack()
 	_determine_movement(input_direction)
-	_determine_animation()
-	
+	_determine_animation(_current_move_state, _current_attack_index)
+
 	$State.text = "Move: " + String(_current_move_state)
 	$Attack.text = "Attack: " + String(_current_attack_index)
 	
