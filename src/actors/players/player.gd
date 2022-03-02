@@ -50,7 +50,7 @@ func _determine_attack() -> void:
 func _start_attack(attack_index: int):
 	"""Start an attack, wait for it to complete, and end the attack."""
 	_current_attack_index = attack_index
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(_attacks[attack_index].attack_time), "timeout")
 	_current_attack_index = NO_ATTACK
 
 func _determine_movement(input_dir: Vector2) -> void:
