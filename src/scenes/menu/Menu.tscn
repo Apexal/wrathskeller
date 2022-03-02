@@ -128,9 +128,9 @@ anims/Subtitle = SubResource( 5 )
 
 [node name="Subtitle" type="Label" parent="VBoxContainer/AnimationPlayer"]
 margin_left = 335.0
-margin_top = 267.732
+margin_top = 272.0
 margin_right = 690.0
-margin_bottom = 288.732
+margin_bottom = 293.0
 hint_tooltip = "Restart to see a new one!"
 mouse_filter = 1
 custom_colors/font_color = Color( 1, 0.909804, 0, 1 )
