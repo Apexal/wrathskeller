@@ -288,10 +288,9 @@ disabled = true
 
 [node name="Attacks" type="Node" parent="."]
 
-[node name="Attack1" type="Node" parent="Attacks"]
+[node name="LightPunch" type="Node" parent="Attacks"]
 script = ExtResource( 3 )
-animation_name = "crouch"
-inputs = [ "attack" ]
+animation_name = "LightPunch"
 
 [node name="Attack" type="Label" parent="."]
 margin_left = -35.0

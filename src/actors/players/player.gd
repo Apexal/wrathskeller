@@ -43,13 +43,7 @@ func _determine_attack() -> void:
 	if _current_attack_index == NO_ATTACK:
 		for i in len(_attacks):
 			var attack: Attack = _attacks[i]
-			var all_inputs_active := true
-			for input in attack.inputs:
-				if not Input.is_action_pressed(_player_input(input)):
-					all_inputs_active = false
-			
-			# If all inputs for this move are active, make it the current attack
-			if all_inputs_active:
+			if Input.is_action_just_pressed(_player_input(attack.type)):
 				_start_attack(i)
 				break # No need to continue looping
 
