@@ -120,7 +120,7 @@ __meta__ = {
 
 [node name="Start" type="Button" parent="Buttons"]
 margin_right = 186.0
-margin_bottom = 44.0
+margin_bottom = 32.0
 focus_neighbour_top = NodePath("../Quit")
 focus_neighbour_bottom = NodePath("../Training")
 size_flags_horizontal = 3
@@ -128,10 +128,20 @@ size_flags_vertical = 3
 disabled = true
 text = "Start Game"
 
-[node name="Training" type="Button" parent="Buttons"]
-margin_top = 48.0
+[node name="ManageCharacters" type="Button" parent="Buttons"]
+margin_top = 36.0
 margin_right = 186.0
-margin_bottom = 93.0
+margin_bottom = 69.0
+focus_neighbour_top = NodePath("../Start")
+focus_neighbour_bottom = NodePath("../Quit")
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Manage Characters"
+
+[node name="Training" type="Button" parent="Buttons"]
+margin_top = 73.0
+margin_right = 186.0
+margin_bottom = 105.0
 focus_neighbour_top = NodePath("../Start")
 focus_neighbour_bottom = NodePath("../Quit")
 size_flags_horizontal = 3
@@ -139,7 +149,7 @@ size_flags_vertical = 3
 text = "Training"
 
 [node name="Quit" type="Button" parent="Buttons"]
-margin_top = 97.0
+margin_top = 109.0
 margin_right = 186.0
 margin_bottom = 142.0
 focus_neighbour_top = NodePath("../Training")
@@ -149,5 +159,6 @@ size_flags_vertical = 3
 text = "Quit"
 
 [connection signal="pressed" from="Buttons/Start" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="Buttons/ManageCharacters" to="." method="_on_ManageCharacters_pressed"]
 [connection signal="pressed" from="Buttons/Training" to="." method="_on_TrainingButton_pressed"]
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_QuitButton_pressed"]
