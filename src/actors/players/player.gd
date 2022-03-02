@@ -39,7 +39,7 @@ func _get_input_direction() -> Vector2:
 		-1 if is_on_floor() and Input.is_action_just_pressed(_player_input("jump")) else (1.0 if Input.is_action_pressed(_player_input("down")) else 0.0)
 	)
  
-func _handle_attack() -> void:
+func _determine_attack() -> void:
 	if _current_attack_index == NO_ATTACK:
 		for i in len(_attacks):
 			var attack: Attack = _attacks[i]
@@ -50,15 +50,16 @@ func _handle_attack() -> void:
 			
 			# If all inputs for this move are active, make it the current attack
 			if all_inputs_active:
-				_current_attack_index = i
+				_start_attack(i)
 				break # No need to continue looping
-		
-		# If a new move has been chosen, pause and then reset the move state
-		if _current_attack_index != NO_ATTACK:
-			yield(get_tree().create_timer(0.5), "timeout")
-			_current_attack_index = NO_ATTACK
 
-func _handle_movement(input_dir: Vector2) -> void:
+func _start_attack(attack_index: int):
+	"""Start an attack, wait for it to complete, and end the attack."""
+	_current_attack_index = attack_index
+	yield(get_tree().create_timer(0.5), "timeout")
+	_current_attack_index = NO_ATTACK
+
+func _determine_movement(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
 	
 	if _current_attack_index != NO_ATTACK:
@@ -91,7 +92,7 @@ func _handle_movement(input_dir: Vector2) -> void:
 			_velocity.x = 0.0
 			_current_move_state = MOVE_STATE.IDLING
 
-func _handle_animation() -> void:
+func _determine_animation() -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
 	if _current_attack_index != NO_ATTACK: 
 		state_machine.travel(_attacks[_current_attack_index].animation_name)
@@ -103,9 +104,9 @@ func _handle_animation() -> void:
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
 
-	_handle_attack()
-	_handle_movement(input_direction)
-	_handle_animation()
+	_determine_attack()
+	_determine_movement(input_direction)
+	_determine_animation()
 	
 	$State.text = "Move: " + String(_current_move_state)
 	$Attack.text = "Attack: " + String(_current_attack_index)
