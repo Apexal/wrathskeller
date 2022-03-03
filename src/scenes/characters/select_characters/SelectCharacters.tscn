@@ -1,11 +1,16 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
 
-[node name="Control" type="Control"]
+[ext_resource path="res://src/scenes/characters/select_characters/SelectCharacters.gd" type="Script" id=1]
+[ext_resource path="res://src/scenes/characters/select_characters/CharacterChoice.tscn" type="PackedScene" id=2]
+
+[node name="SelectCharacters" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+character_choice = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -42,6 +47,33 @@ margin_right = 490.0
 margin_bottom = 14.0
 text = "Player 1"
 
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/Player1Col"]
+margin_top = 18.0
+margin_right = 490.0
+margin_bottom = 538.0
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer/Player1Col/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 483.0
+margin_bottom = 513.0
+columns = 2
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer/Player1Col/PanelContainer/GridContainer"]
+margin_right = 236.0
+margin_bottom = 506.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CharacterBackstory" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/Player1Col/PanelContainer/GridContainer"]
+margin_left = 240.0
+margin_right = 476.0
+margin_bottom = 506.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Character backstory here"
+
 [node name="Player2Col" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 494.0
 margin_right = 984.0
@@ -57,3 +89,4 @@ text = "Player 2"
 margin_top = 560.0
 margin_right = 984.0
 margin_bottom = 560.0
+columns = 5
