@@ -17,6 +17,7 @@ bg_color = Color( 0.564706, 0.0392157, 0.109804, 1 )
 bg_color = Color( 0.552941, 0, 0.0705882, 1 )
 
 [sub_resource type="Theme" id=1]
+resource_name = "ui_theme"
 default_font = ExtResource( 4 )
 Button/colors/font_color = Color( 1, 1, 1, 1 )
 Button/styles/hover = SubResource( 3 )
@@ -66,14 +67,14 @@ anchor_bottom = 1.0
 margin_left = -93.0
 margin_top = -237.0
 margin_right = 93.0
-margin_bottom = -95.0
+margin_bottom = -64.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Start" type="Button" parent="Buttons"]
 margin_right = 186.0
-margin_bottom = 32.0
+margin_bottom = 40.0
 focus_neighbour_top = NodePath("../Quit")
 focus_neighbour_bottom = NodePath("../Training")
 size_flags_horizontal = 3
@@ -82,9 +83,9 @@ disabled = true
 text = "Start Game"
 
 [node name="ManageCharacters" type="Button" parent="Buttons"]
-margin_top = 36.0
+margin_top = 44.0
 margin_right = 186.0
-margin_bottom = 69.0
+margin_bottom = 84.0
 focus_neighbour_top = NodePath("../Start")
 focus_neighbour_bottom = NodePath("../Quit")
 size_flags_horizontal = 3
@@ -92,9 +93,9 @@ size_flags_vertical = 3
 text = "Manage Characters"
 
 [node name="Training" type="Button" parent="Buttons"]
-margin_top = 73.0
+margin_top = 88.0
 margin_right = 186.0
-margin_bottom = 105.0
+margin_bottom = 128.0
 focus_neighbour_top = NodePath("../Start")
 focus_neighbour_bottom = NodePath("../Quit")
 size_flags_horizontal = 3
@@ -102,9 +103,9 @@ size_flags_vertical = 3
 text = "Training"
 
 [node name="Quit" type="Button" parent="Buttons"]
-margin_top = 109.0
+margin_top = 132.0
 margin_right = 186.0
-margin_bottom = 142.0
+margin_bottom = 173.0
 focus_neighbour_top = NodePath("../Training")
 focus_neighbour_bottom = NodePath("../Start")
 size_flags_horizontal = 3
