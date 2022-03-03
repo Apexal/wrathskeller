@@ -37,6 +37,3 @@ func _on_Import_pressed():
 	_serialize_character(_create_character({ 
 		"name": "No"
 	}))
-
-func _ready():
-	pass
