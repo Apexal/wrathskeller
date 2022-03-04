@@ -120,7 +120,7 @@ __meta__ = {
 
 [node name="Start" type="Button" parent="Buttons"]
 margin_right = 186.0
-margin_bottom = 44.0
+margin_bottom = 36.0
 focus_neighbour_top = NodePath("../Quit")
 focus_neighbour_bottom = NodePath("../Training")
 size_flags_horizontal = 3
@@ -129,9 +129,9 @@ disabled = true
 text = "Start Game"
 
 [node name="Training" type="Button" parent="Buttons"]
-margin_top = 48.0
+margin_top = 40.0
 margin_right = 186.0
-margin_bottom = 93.0
+margin_bottom = 76.0
 focus_neighbour_top = NodePath("../Start")
 focus_neighbour_bottom = NodePath("../Quit")
 size_flags_horizontal = 3
@@ -139,14 +139,20 @@ size_flags_vertical = 3
 text = "Training"
 
 [node name="Quit" type="Button" parent="Buttons"]
-margin_top = 97.0
+margin_top = 120.0
 margin_right = 186.0
-margin_bottom = 142.0
+margin_bottom = 156.0
 focus_neighbour_top = NodePath("../Training")
 focus_neighbour_bottom = NodePath("../Start")
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Quit"
+
+[node name="Controls" type="Button" parent="Buttons"]
+margin_top = 80.0
+margin_right = 186.0
+margin_bottom = 116.0
+text = "Controls"
 
 [connection signal="pressed" from="Buttons/Start" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="Buttons/Training" to="." method="_on_TrainingButton_pressed"]
