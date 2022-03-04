@@ -2,7 +2,7 @@ extends Control
 
 export(float) var speed = 40.0
 
-onready var label: RichTextLabel = $HBoxContainer/VBoxContainer/Text
+onready var label = $HBoxContainer
 
 func _change_scene():
 	# TODO: determine how to fade to black before changing
