@@ -13,4 +13,12 @@ func _ready():
 		label.text = character_data["name"]
 		container.add_child(label)
 		
-		$GridContainer.add_child(container)
+		var buttons := HBoxContainer.new()
+		var remove_button := Button.new()
+		remove_button.text = "Remove"
+		remove_button.size_flags_horizontal = SIZE_EXPAND
+		buttons.add_child(remove_button)
+		
+		container.add_child(buttons)
+		
+		$VBoxContainer/Characters.add_child(container)
