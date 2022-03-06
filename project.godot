@@ -36,6 +36,7 @@ config/icon="res://src/assets/icon.png"
 [autoload]
 
 BackgroundMusic="*res://src/scenes/background_music/BackgroundMusic.tscn"
+CharacterManager="*res://src/scripts/CharacterManager.gd"
 
 [display]
 
