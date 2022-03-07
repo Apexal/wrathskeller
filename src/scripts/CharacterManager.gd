@@ -46,6 +46,13 @@ static func create_character(character_data: Dictionary):
 	
 	var character_root := character_template.instance()
 	character_root.name = character_data["name"]
+	
+	# Set sprite frames
+	var sprite: AnimatedSprite = character_root.get_node("AnimatedSprite")
+	sprite.frames = generate_character_sprite_frames(character_data)
+	sprite.animation = "idle"
+	sprite.playing = true
+	print("frames", sprite.frames)
 	return character_root
 
 static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
@@ -98,7 +105,7 @@ static func generate_character_sprite_frames(character_data: Dictionary) -> Spri
 			sprite_frames.add_frame(anim_name, frame_to_texture(frame, Vector2(300, 300)))
 	
 	# Create animations for different states
-	for state in ["block", "crouch", "walk", "dash", "grappled", "hurt", "win", "lose"]:
+	for state in ["idle", "block", "crouch", "walk", "dash", "grappled", "hurt", "win", "lose"]:
 		sprite_frames.add_animation(state)
 		for frame in character_data[state + "Animation"]:
 			sprite_frames.add_frame(state, frame_to_texture(frame, Vector2(300, 300)))
