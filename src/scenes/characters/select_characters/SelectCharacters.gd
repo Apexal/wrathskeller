@@ -9,30 +9,18 @@ var player_2_character_index := 0
 
 var characters: Array = []
 
-func _deserialize_characters() -> Array:
-	var characters = []
-	var dir = Directory.new()
-	if dir.open("user://") == OK:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if not dir.current_is_dir():
-				if file_name.ends_with(".scn"):
-					var character = load("user://" + file_name).instance()
-					characters.append(character)
-			file_name = dir.get_next()
-	
-	return characters
-
 func _ready():
 	# On ready, populate character grid
-	characters = _deserialize_characters()
+	for character_file in CharacterManager.list_character_files():
+		var character = CharacterManager.load_character_json(character_file)
+		characters.append(character)
 	
-	for character in characters:
-		var character_grid_node := character_choice.instance()
-		character_grid_node.name = character.name
-		character_grid_node.find_node("CharacterName").text = character.name
-		character_grid.add_child(character_grid_node)
+		var container := VBoxContainer.new()
+		var character_data = CharacterManager.load_character_json(character_file)
+		var animated_sprite = CharacterManager.create_character_preview(character_data)
+		container.add_child(animated_sprite)
+		
+		character_grid.add_child(container)
 
 func _process(delta):
 	if Input.is_action_just_pressed("player_1_move_left"):
