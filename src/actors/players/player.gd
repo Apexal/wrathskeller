@@ -6,20 +6,20 @@ onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["p
 export(int, 1, 2) var player_number := 1
 
 const DAMAGE_COOL_DOWN := 0.25 # How many seconds after being damaged are you invincible
-onready var _attacks := $Actions.get_children() # Loads attacks from nodes
+onready var _actions := $Actions.get_children() # Loads actions from nodes
 
-enum MOVE_STATE {IDLING, WALKING, JUMPING, CROUCHING}
+enum MOVE_STATE {IDLING, WALKING, DASHING, JUMPING, CROUCHING, BLOCKING}
 var _current_move_state: int = MOVE_STATE.IDLING
 var _last_move_state: int = MOVE_STATE.IDLING
 
-const NO_ATTACK = -1
-var _current_attack_index := NO_ATTACK
+const NO_ACTION = -1
+var _current_action_index := NO_ACTION
 
 func _ready() -> void:
-	print("Player {player_number} ({name}): Recognized {attack_count} attacks".format({
+	print("Player {player_number} ({name}): Recognized {action_count} actions".format({
 		"name": name,
 		"player_number": player_number,
-		"attack_count": len(_attacks)
+		"action_count": len(_actions)
 	}))
 
 func _player_input(input_name: String) -> String:
@@ -39,25 +39,25 @@ func _get_input_direction() -> Vector2:
 		-1 if is_on_floor() and Input.is_action_just_pressed(_player_input("jump")) else (1.0 if Input.is_action_pressed(_player_input("down")) else 0.0)
 	)
  
-func _determine_attack() -> void:
-	if _current_attack_index == NO_ATTACK:
-		for i in len(_attacks):
-			var attack: Action = _attacks[i]
-			if Input.is_action_just_pressed(_player_input(attack.type)):
-				_start_attack(i)
+func _determine_action() -> void:
+	if _current_action_index == NO_ACTION:
+		for i in len(_actions):
+			var action: Action = _actions[i]
+			if Input.is_action_just_pressed(_player_input(action.type)):
+				_start_action(i)
 				break # No need to continue looping
 
-func _start_attack(attack_index: int):
-	"""Start an attack, wait for it to complete, and end the attack."""
-	_current_attack_index = attack_index
-	yield(get_tree().create_timer(_attacks[attack_index].attack_time), "timeout")
-	_current_attack_index = NO_ATTACK
+func _start_action(action_index: int):
+	"""Start an action, wait for it to complete, and end the action."""
+	_current_action_index = action_index
+	yield(get_tree().create_timer(_actions[action_index].action_time), "timeout")
+	_current_action_index = NO_ACTION
 
 func _determine_movement(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
 
-	if _current_attack_index != NO_ATTACK:
-		# Prevent moving when attacking unless midair
+	if _current_action_index != NO_ACTION:
+		# Prevent moving when performing action unless midair
 		if is_on_floor():
 			_velocity.x = 0		
 		return
@@ -86,10 +86,10 @@ func _determine_movement(input_dir: Vector2) -> void:
 			_velocity.x = 0.0
 			_current_move_state = MOVE_STATE.IDLING
 
-func _determine_animation(move_state: int, attack_index: int) -> void:
+func _determine_animation(move_state: int, action_index: int) -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
-	if attack_index != NO_ATTACK: 
-		state_machine.travel(_attacks[attack_index].animation_name)
+	if action_index != NO_ACTION: 
+		state_machine.travel(_actions[action_index].animation_name)
 	elif move_state == MOVE_STATE.IDLING:
 		state_machine.travel("idle")
 	elif move_state == MOVE_STATE.WALKING:
@@ -102,10 +102,10 @@ func _determine_animation(move_state: int, attack_index: int) -> void:
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
 
-	_determine_attack()
+	_determine_action()
 	_determine_movement(input_direction)
-	_determine_animation(_current_move_state, _current_attack_index)
+	_determine_animation(_current_move_state, _current_action_index)
 
 	$State.text = "Move: " + String(_current_move_state)
-	$Attack.text = "Attack: " + String(_current_attack_index)
+	$Attack.text = "Attack: " + String(_current_action_index)
 	
