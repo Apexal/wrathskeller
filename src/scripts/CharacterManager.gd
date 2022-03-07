@@ -59,6 +59,15 @@ static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
 	texture.set_size_override(size)
 	return texture
 
+static func b64_to_audio_stream(b64_mp3: String) -> AudioStream:
+	var audio_stream := AudioStreamMP3.new()
+	var buffer = Marshalls.base64_to_raw(b64_mp3)	
+	audio_stream.set_data(buffer)
+	var haha := AudioStreamRandomPitch.new()
+	haha.audio_stream = audio_stream
+	haha.random_pitch = 1.5
+	return haha
+
 static func frame_to_texture(animation_frame: Dictionary, size: Vector2) -> ImageTexture:
 	return b64_to_texture(animation_frame["base64EncodedImage"], size)
 
