@@ -1,6 +1,9 @@
 extends Node
 
 const character_template = preload("res://src/actors/players/Character.tscn")
+
+# The recognized state animations in the exact ORDER they must be processed in
+# This order ensures the spritesheet can be generated in sync with the animation tree
 const state_animation_names = [
 	"idle",
 	"walk",
@@ -53,19 +56,36 @@ static func load_character_json(file_path: String):
 	else:
 		return parsed.result
 
+static func generate_animation(anim_name: String, frames: Array, frame_index: int) -> Dictionary:
+	var animation := Animation.new()
+	print(anim_name)
+	var track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(track_index, "Sprite:frame")
+	var anim_length := 0.0
+	for frame in frames:
+		animation.track_insert_key(track_index, anim_length, frame_index)
+		anim_length += frame["durationInS"]
+		frame_index += 1
+	animation.track_insert_key(track_index, anim_length, frame_index-1)	
+	animation.length = anim_length
+	
+	var anim_node := AnimationNodeAnimation.new()
+	anim_node.animation = anim_name
+		
+	return {"animation": animation, "frame_index": frame_index, "animation_node": anim_node}
+
 static func create_character(character_data: Dictionary):
 	"""TODO"""
 	
 	var character_root := character_template.instance()
 	character_root.name = character_data["name"]
 	
-	# Set sprite frames
+	# Configure sprite with generated sprite sheet
 	var sprite: Sprite = character_root.get_node("Sprite")
 	var sprite_sheet := generate_character_sprite_sheet(character_data)
 	sprite.texture = sprite_sheet["texture"]
 	sprite.hframes = sprite_sheet["frame_count"]
 	
-	# Generate actions
 	var player: AnimationPlayer = character_root.get_node("AnimationPlayer")
 	var state_machine: AnimationNodeStateMachine = character_root.get_node("AnimationTree").tree_root
 	
@@ -73,57 +93,45 @@ static func create_character(character_data: Dictionary):
 	# Create state animations
 	for state in state_animation_names:
 		var anim_name: String = state
-		var animation := Animation.new()
 		
-		if state == "walk" or state == "dash" or state == "idle" or state == "grappled":
-			animation.loop = true
+		var animation_result := generate_animation(anim_name, character_data["stateAnimations"][state], frame_index)
+		frame_index = animation_result["frame_index"]
 		
-		var track_index = animation.add_track(Animation.TYPE_VALUE)
-		animation.track_set_path(track_index, "Sprite:frame")
-		var local_frame_index = 0
-		var anim_length := 0.0
-		for frame in character_data["stateAnimations"][state]:
-			anim_length += frame["durationInS"]
-			animation.track_insert_key(track_index, local_frame_index * frame["durationInS"], frame_index)
-			frame_index += 1
-			local_frame_index += 1
-		animation.length = anim_length
-		
+		if state == "idle" or state == "walk":
+			animation_result["animation"].loop = true
+
 		# Add animation in player
-		player.add_animation(anim_name, animation)
-		var anim_node := AnimationNodeAnimation.new()
-		anim_node.animation = anim_name
+		player.add_animation(anim_name, animation_result["animation"])
+		state_machine.add_node(anim_name, animation_result["animation_node"])
 		
-		state_machine.add_node(anim_name, anim_node)
+		if state != "idle":
+			var transition := AnimationNodeStateMachineTransition.new()
+			state_machine.add_transition(anim_name, "idle", transition)
+			state_machine.add_transition("idle", anim_name, transition)
 	
-	state_machine.set_start_node("idle")
+	state_machine.set_start_node("idle") # Make idle autoplay
 	
 	var actions = character_root.get_node("Actions")
 	for action in character_data["actions"]:
 		var anim_name: String = action["type"]
-		print("action ", anim_name)
-		# Create animation
-		var animation := Animation.new()
-		var track_index = animation.add_track(Animation.TYPE_VALUE)
-		animation.track_set_path(track_index, "Sprite:frame")
-		var local_frame_index = 0
-		for frame in action["animation"]:
-			animation.track_insert_key(track_index, local_frame_index * frame["durationInS"], frame_index)
-			frame_index += 1
-			local_frame_index += 1
+		
+		var animation_result := generate_animation(anim_name, action["animation"], frame_index)
+		frame_index = animation_result["frame_index"]
 		
 		# Add animation in player
-		player.add_animation(anim_name, animation)
-		var anim_node := AnimationNodeAnimation.new()
-		anim_node.animation = anim_name
-		state_machine.add_node(anim_name, anim_node)
+		player.add_animation(anim_name, animation_result["animation"])
+		state_machine.add_node(anim_name, animation_result["animation_node"])
+		
+		# Create animation node transition
 		var transition := AnimationNodeStateMachineTransition.new()
 		state_machine.add_transition(anim_name, "idle", transition)
 		state_machine.add_transition("idle", anim_name, transition)
 		
+		# Create action node
 		var action_node: Action = Action.new()
 		action_node.animation_name = anim_name
 		action_node.type = action["type"]
+		action_node.action_time = animation_result["animation"].length
 		character_root.get_node("Actions").add_child(action_node)
 		
 	return character_root
