@@ -1,7 +1,31 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/scenes/characters/select_characters/SelectCharacters.gd" type="Script" id=1]
-[ext_resource path="res://src/scenes/characters/select_characters/CharacterChoice.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/actors/npcs/head/sprites/open-mouth.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends VBoxContainer
+
+func _mark_chosen(player_number: int) -> void:
+	pass
+"
+
+[sub_resource type="PackedScene" id=2]
+_bundled = {
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray( "CharacterChoice", "margin_right", "margin_bottom", "size_flags_vertical", "script", "__meta__", "VBoxContainer", "TextureRect", "rect_min_size", "texture", "expand", "stretch_mode", "CharacterName", "margin_top", "text", "Label" ),
+"node_count": 3,
+"node_paths": [  ],
+"nodes": PoolIntArray( -1, -1, 6, 0, -1, 5, 1, 0, 2, 1, 3, 2, 4, 3, 5, 4, 0, 0, 0, 7, 7, -1, 7, 1, 0, 2, 5, 8, 6, 9, 7, 10, 8, 11, 9, 5, 10, 0, 0, 0, 15, 12, -1, 4, 13, 11, 1, 0, 2, 1, 14, 12, 0 ),
+"variants": [ 102.0, 118.0, 3, SubResource( 1 ), {
+"_edit_use_anchors_": false
+}, 100.0, Vector2( 100, 100 ), ExtResource( 2 ), true, 6, {
+"_edit_use_anchors_": false
+}, 104.0, "Character Name" ],
+"version": 2
+}
 
 [node name="SelectCharacters" type="Control"]
 anchor_right = 1.0
@@ -10,7 +34,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-character_choice = ExtResource( 2 )
+character_choice = SubResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_right = 1.0
