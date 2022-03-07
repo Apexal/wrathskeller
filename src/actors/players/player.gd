@@ -6,7 +6,7 @@ onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["p
 export(int, 1, 2) var player_number := 1
 
 const DAMAGE_COOL_DOWN := 0.25 # How many seconds after being damaged are you invincible
-onready var _attacks := $Attacks.get_children() # Loads attacks from nodes
+onready var _attacks := $Actions.get_children() # Loads attacks from nodes
 
 enum MOVE_STATE {IDLING, WALKING, JUMPING, CROUCHING}
 var _current_move_state: int = MOVE_STATE.IDLING
@@ -42,7 +42,7 @@ func _get_input_direction() -> Vector2:
 func _determine_attack() -> void:
 	if _current_attack_index == NO_ATTACK:
 		for i in len(_attacks):
-			var attack: Attack = _attacks[i]
+			var attack: Action = _attacks[i]
 			if Input.is_action_just_pressed(_player_input(attack.type)):
 				_start_attack(i)
 				break # No need to continue looping
@@ -90,10 +90,14 @@ func _determine_animation(move_state: int, attack_index: int) -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
 	if attack_index != NO_ATTACK: 
 		state_machine.travel(_attacks[attack_index].animation_name)
-	elif move_state == MOVE_STATE.IDLING or move_state == MOVE_STATE.WALKING:
+	elif move_state == MOVE_STATE.IDLING:
 		state_machine.travel("idle")
+	elif move_state == MOVE_STATE.WALKING:
+		state_machine.travel("walk")
 	elif move_state == MOVE_STATE.CROUCHING:
 		state_machine.travel("crouch")
+	elif move_state == MOVE_STATE.JUMPING:
+		state_machine.travel("jump")
 
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()

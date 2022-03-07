@@ -1,8 +1,17 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/actors/players/player.gd" type="Script" id=2]
 
+[sub_resource type="Animation" id=73]
+resource_name = "test"
+
+[sub_resource type="AnimationNodeAnimation" id=74]
+animation = "test"
+
 [sub_resource type="AnimationNodeStateMachine" id=71]
+states/test/node = SubResource( 74 )
+states/test/position = Vector2( 509, 120.39 )
+start_node = "test"
 graph_offset = Vector2( 0, 26.3903 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=72]
@@ -20,10 +29,12 @@ script = ExtResource( 2 )
 gravity = 20.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/test = SubResource( 73 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 71 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 72 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -44,7 +55,7 @@ disabled = true
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
 
-[node name="Attacks" type="Node" parent="."]
+[node name="Actions" type="Node" parent="."]
 
 [node name="Attack" type="Label" parent="."]
 margin_left = -35.0

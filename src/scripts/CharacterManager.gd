@@ -1,6 +1,18 @@
 extends Node
 
 const character_template = preload("res://src/actors/players/Character.tscn")
+const state_animation_names = [
+	"idle",
+	"walk",
+	"dash",
+	"jump",
+	"crouch",
+	"block",
+	"grappled",
+	"hurt",
+	"win",
+	"lose"
+]
 
 static func list_character_files() -> Array:
 	"""Lists all character JSON files ending in .wrath in the user:// directory."""
@@ -52,6 +64,68 @@ static func create_character(character_data: Dictionary):
 	var sprite_sheet := generate_character_sprite_sheet(character_data)
 	sprite.texture = sprite_sheet["texture"]
 	sprite.hframes = sprite_sheet["frame_count"]
+	
+	# Generate actions
+	var player: AnimationPlayer = character_root.get_node("AnimationPlayer")
+	var state_machine: AnimationNodeStateMachine = character_root.get_node("AnimationTree").tree_root
+	
+	var frame_index := 0
+	# Create state animations
+	for state in state_animation_names:
+		var anim_name: String = state
+		var animation := Animation.new()
+		
+		if state == "walk" or state == "dash" or state == "idle" or state == "grappled":
+			animation.loop = true
+		
+		var track_index = animation.add_track(Animation.TYPE_VALUE)
+		animation.track_set_path(track_index, "Sprite:frame")
+		var local_frame_index = 0
+		var anim_length := 0.0
+		for frame in character_data["stateAnimations"][state]:
+			anim_length += frame["durationInS"]
+			animation.track_insert_key(track_index, local_frame_index * frame["durationInS"], frame_index)
+			frame_index += 1
+			local_frame_index += 1
+		animation.length = anim_length
+		
+		# Add animation in player
+		player.add_animation(anim_name, animation)
+		var anim_node := AnimationNodeAnimation.new()
+		anim_node.animation = anim_name
+		
+		state_machine.add_node(anim_name, anim_node)
+	
+	state_machine.set_start_node("idle")
+	
+	var actions = character_root.get_node("Actions")
+	for action in character_data["actions"]:
+		var anim_name: String = action["type"]
+		print("action ", anim_name)
+		# Create animation
+		var animation := Animation.new()
+		var track_index = animation.add_track(Animation.TYPE_VALUE)
+		animation.track_set_path(track_index, "Sprite:frame")
+		var local_frame_index = 0
+		for frame in action["animation"]:
+			animation.track_insert_key(track_index, local_frame_index * frame["durationInS"], frame_index)
+			frame_index += 1
+			local_frame_index += 1
+		
+		# Add animation in player
+		player.add_animation(anim_name, animation)
+		var anim_node := AnimationNodeAnimation.new()
+		anim_node.animation = anim_name
+		state_machine.add_node(anim_name, anim_node)
+		var transition := AnimationNodeStateMachineTransition.new()
+		state_machine.add_transition(anim_name, "idle", transition)
+		state_machine.add_transition("idle", anim_name, transition)
+		
+		var action_node: Action = Action.new()
+		action_node.animation_name = anim_name
+		action_node.type = action["type"]
+		character_root.get_node("Actions").add_child(action_node)
+		
 	return character_root
 
 static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
@@ -97,49 +171,57 @@ static func create_character_preview(character_data: Dictionary, size: Vector2=V
 static func generate_character_sprite_frames(character_data: Dictionary) -> SpriteFrames:
 	var sprite_frames := SpriteFrames.new()
 	
-	# Create animations for each move
-	for move in character_data["moveset"]:
-		var anim_name : String = move["type"]
+	# Create animations for each action
+	for action in character_data["actions"]:
+		var anim_name : String = action["type"]
 		sprite_frames.add_animation(anim_name) # light_punch, super, etc.
-		for frame in move["animation"]:
+		for frame in action["animation"]:
 			sprite_frames.add_frame(anim_name, frame_to_texture(frame, Vector2(300, 300)))
 	
 	# Create animations for different states
-	for state in ["idle", "block", "crouch", "walk", "dash", "grappled", "hurt", "win", "lose"]:
+	for state in state_animation_names:
 		sprite_frames.add_animation(state)
-		for frame in character_data[state + "Animation"]:
+		for frame in character_data["stateAnimations"][state]:
 			sprite_frames.add_frame(state, frame_to_texture(frame, Vector2(300, 300)))
 
-	
 	return sprite_frames
 	
 static func generate_character_sprite_sheet(character_data: Dictionary) -> Dictionary:
 	# First calculate number of frames so we can determine width of spritesheet
 	var frame_count := 0
-	for move in character_data["moveset"]:
-		frame_count += len(move["animation"])
+	
+	for state in state_animation_names:
+		frame_count += len(character_data["stateAnimations"][state])
+	
+	for action in character_data["actions"]:
+		frame_count += len(action)
 	
 	var frame_size = 400
 	var image := Image.new()
 	image.create(frame_size * frame_count,frame_size,false,Image.FORMAT_RGBA8)
 	image.fill(Color.white)
+
 	
 	# Copy each frame into the spritesheet image
 	var frame_index = 0
-	for move in character_data["moveset"]:
-		for frame in move["animation"]:
+	for state in state_animation_names:
+		for frame in character_data["stateAnimations"][state]:
 			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
 			var frame_image := frame_texture.get_data()
-			print("format is ", frame_texture.get_format())
 			var frame_pos := Vector2(frame_index*frame_size, 0)
-			print(frame_pos)
+			image.blit_rect(frame_image, Rect2(0,0, frame_size, frame_size), frame_pos)
+			frame_index += 1
+	
+	for action in character_data["actions"]:
+		for frame in action["animation"]:
+			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
+			var frame_image := frame_texture.get_data()
+			var frame_pos := Vector2(frame_index*frame_size, 0)
 			image.blit_rect(frame_image, Rect2(0,0, frame_size, frame_size), frame_pos)
 			frame_index += 1
 
 	var texture := ImageTexture.new()
 	texture.create_from_image(image)
-	
-	print(texture, frame_count, frame_index)
 	
 	return {
 		"texture": texture,
