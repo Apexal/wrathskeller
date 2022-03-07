@@ -57,12 +57,12 @@ disabled = true
 
 [node name="Actions" type="Node" parent="."]
 
-[node name="Attack" type="Label" parent="."]
+[node name="Action" type="Label" parent="."]
 margin_left = -35.0
 margin_top = -145.395
 margin_right = 5.0
 margin_bottom = -131.395
-text = "Attack"
+text = "Action"
 __meta__ = {
 "_edit_use_anchors_": false
 }
