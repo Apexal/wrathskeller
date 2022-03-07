@@ -107,5 +107,4 @@ func _process(delta: float) -> void:
 	_determine_animation(_current_move_state, _current_action_index)
 
 	$State.text = "Move: " + String(_current_move_state)
-	$Attack.text = "Attack: " + String(_current_action_index)
-	
+	$Action.text = "Action: " + String(_current_action_index)

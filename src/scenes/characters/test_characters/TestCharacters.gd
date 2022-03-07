@@ -11,3 +11,6 @@ func _ready():
 	player2.player_number = 2
 	player2.position = $Player2StartPos.position
 	add_child(player2)
+	
+#	yield(get_tree().create_timer(3.0), "timeout")
+#	player1.take_damage(10.0)

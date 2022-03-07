@@ -75,7 +75,7 @@ static func generate_animation(anim_name: String, frames: Array, frame_index: in
 	return {"animation": animation, "frame_index": frame_index, "animation_node": anim_node}
 
 static func create_character(character_data: Dictionary):
-	"""TODO"""
+	"""Builds the character scene from character data."""
 	
 	var character_root := character_template.instance()
 	character_root.name = character_data["name"]
@@ -89,7 +89,9 @@ static func create_character(character_data: Dictionary):
 	var player: AnimationPlayer = character_root.get_node("AnimationPlayer")
 	var state_machine: AnimationNodeStateMachine = character_root.get_node("AnimationTree").tree_root
 	
+	# Keeps track of overall frame index to sync up with spritesheet
 	var frame_index := 0
+	
 	# Create state animations
 	for state in state_animation_names:
 		var anim_name: String = state
@@ -97,7 +99,8 @@ static func create_character(character_data: Dictionary):
 		var animation_result := generate_animation(anim_name, character_data["stateAnimations"][state], frame_index)
 		frame_index = animation_result["frame_index"]
 		
-		if state == "idle" or state == "walk":
+		# Some animations should loop
+		if state == "idle" or state == "walk" or state == "grappled" or state == "dash" or state == "win" or state == "lose":
 			animation_result["animation"].loop = true
 
 		# Add animation in player
@@ -112,6 +115,8 @@ static func create_character(character_data: Dictionary):
 	state_machine.set_start_node("idle") # Make idle autoplay
 	
 	var actions = character_root.get_node("Actions")
+	
+	# Create action animation and nodes
 	for action in character_data["actions"]:
 		var anim_name: String = action["type"]
 		
@@ -205,11 +210,12 @@ static func generate_character_sprite_sheet(character_data: Dictionary) -> Dicti
 		frame_count += len(action)
 	
 	var frame_size = 400
+	
+	# Create the placeholder image in the correct size
 	var image := Image.new()
 	image.create(frame_size * frame_count,frame_size,false,Image.FORMAT_RGBA8)
-	image.fill(Color.white)
+	image.fill(Color.transparent)
 
-	
 	# Copy each frame into the spritesheet image
 	var frame_index = 0
 	for state in state_animation_names:
@@ -225,6 +231,7 @@ static func generate_character_sprite_sheet(character_data: Dictionary) -> Dicti
 			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
 			var frame_image := frame_texture.get_data()
 			var frame_pos := Vector2(frame_index*frame_size, 0)
+			# Copy frame into correct spot in spritesheet
 			image.blit_rect(frame_image, Rect2(0,0, frame_size, frame_size), frame_pos)
 			frame_index += 1
 
