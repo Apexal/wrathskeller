@@ -3,7 +3,7 @@ extends Node
 const character_template = preload("res://src/actors/players/Character.tscn")
 
 static func list_character_files() -> Array:
-	"""Lists all character JSON files in the user:// directory."""
+	"""Lists all character JSON files ending in .wrath in the user:// directory."""
 
 	var character_files = []
 	var dir = Directory.new()
@@ -12,7 +12,7 @@ static func list_character_files() -> Array:
 		var file_name = dir.get_next()
 		while file_name != "":
 			if not dir.current_is_dir():
-				if file_name.ends_with(".json"):
+				if file_name.ends_with(".wrath"):
 					character_files.append(file_name)
 			file_name = dir.get_next()
 	return character_files
@@ -48,11 +48,10 @@ static func create_character(character_data: Dictionary):
 	character_root.name = character_data["name"]
 	
 	# Set sprite frames
-	var sprite: AnimatedSprite = character_root.get_node("AnimatedSprite")
-	sprite.frames = generate_character_sprite_frames(character_data)
-	sprite.animation = "idle"
-	sprite.playing = true
-	print("frames", sprite.frames)
+	var sprite: Sprite = character_root.get_node("Sprite")
+	var sprite_sheet := generate_character_sprite_sheet(character_data)
+	sprite.texture = sprite_sheet["texture"]
+	sprite.hframes = sprite_sheet["frame_count"]
 	return character_root
 
 static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
@@ -61,6 +60,7 @@ static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
 	var buffer = Marshalls.base64_to_raw(b64_png)
 	var image = Image.new()
 	image.load_png_from_buffer(buffer)
+	image.convert(Image.FORMAT_RGBA8)
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
 	texture.set_size_override(size)
@@ -113,3 +113,35 @@ static func generate_character_sprite_frames(character_data: Dictionary) -> Spri
 	
 	return sprite_frames
 	
+static func generate_character_sprite_sheet(character_data: Dictionary) -> Dictionary:
+	# First calculate number of frames so we can determine width of spritesheet
+	var frame_count := 0
+	for move in character_data["moveset"]:
+		frame_count += len(move["animation"])
+	
+	var frame_size = 400
+	var image := Image.new()
+	image.create(frame_size * frame_count,frame_size,false,Image.FORMAT_RGBA8)
+	image.fill(Color.white)
+	
+	# Copy each frame into the spritesheet image
+	var frame_index = 0
+	for move in character_data["moveset"]:
+		for frame in move["animation"]:
+			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
+			var frame_image := frame_texture.get_data()
+			print("format is ", frame_texture.get_format())
+			var frame_pos := Vector2(frame_index*frame_size, 0)
+			print(frame_pos)
+			image.blit_rect(frame_image, Rect2(0,0, frame_size, frame_size), frame_pos)
+			frame_index += 1
+
+	var texture := ImageTexture.new()
+	texture.create_from_image(image)
+	
+	print(texture, frame_count, frame_index)
+	
+	return {
+		"texture": texture,
+		"frame_count": frame_count
+	}
