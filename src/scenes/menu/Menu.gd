@@ -19,8 +19,3 @@ func _on_QuitButton_pressed():
 func _on_TrainingButton_pressed():
 	_stop_bg_music()
 	get_tree().change_scene("res://src/scenes/training/TrainingLevel.tscn")
-
-
-func _on_ManageCharacters_pressed():
-	_stop_bg_music()
-	get_tree().change_scene("res://src/scenes/characters/manage_characters/ManageCharacter.tscn")
