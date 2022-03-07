@@ -70,4 +70,5 @@ func _physics_process(delta):
 
 	_face_target(delta)
 	_velocity.y += gravity
+	_velocity.y = min(1000, _velocity.y) # Terminal velocity
 	move_and_slide(_velocity, FLOOR_NORMAL)

@@ -9,6 +9,7 @@ resource_name = "test"
 animation = "test"
 
 [sub_resource type="AnimationNodeStateMachine" id=71]
+resource_local_to_scene = true
 states/test/node = SubResource( 74 )
 states/test/position = Vector2( 509, 120.39 )
 start_node = "test"
@@ -38,7 +39,6 @@ active = true
 parameters/playback = SubResource( 72 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 1, 1 )
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
 position = Vector2( -15, 21 )
