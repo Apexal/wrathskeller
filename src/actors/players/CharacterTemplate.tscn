@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://src/actors/players/player.gd" type="Script" id=2]
+[ext_resource path="res://src/actors/players/player.gd" type="Script" id=1]
 
 [sub_resource type="Animation" id=73]
 resource_name = "test"
@@ -23,10 +23,10 @@ extents = Vector2( 36.5, 138 )
 [sub_resource type="RectangleShape2D" id=61]
 extents = Vector2( 54, 20.8253 )
 
-[node name="Character" type="KinematicBody2D"]
+[node name="CharacterTemplate" type="KinematicBody2D"]
 position = Vector2( 100, 394 )
 scale = Vector2( 1, 1.01104 )
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 gravity = 20.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
