@@ -58,16 +58,20 @@ static func load_character_json(file_path: String):
 
 static func generate_animation(anim_name: String, frames: Array, frame_index: int) -> Dictionary:
 	var animation := Animation.new()
-	var track_index = animation.add_track(Animation.TYPE_VALUE)
-	animation.track_set_path(track_index, "Sprite:frame")
+	
+	# Add animation track for the sprite frame
+	var frame_track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(frame_track_index, "Sprite:frame")
 	var anim_length := 0.0
 	for frame in frames:
-		animation.track_insert_key(track_index, anim_length, frame_index)
+		animation.track_insert_key(frame_track_index, anim_length, frame_index)
 		anim_length += frame["durationInS"]
 		frame_index += 1
-	animation.track_insert_key(track_index, anim_length, frame_index-1)	
+	animation.track_insert_key(frame_track_index, anim_length, frame_index-1)	
 	animation.length = anim_length
-
+	
+	# TODO: Animate the colliders
+	
 	var anim_node := AnimationNodeAnimation.new()
 	anim_node.animation = anim_name
 	
