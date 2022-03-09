@@ -1,6 +1,6 @@
 extends Node
 
-const character_template = preload("res://src/actors/players/Character.tscn")
+const character_template = preload("res://src/actors/players/CharacterTemplate.tscn")
 
 # The recognized state animations in the exact ORDER they must be processed in
 # This order ensures the spritesheet can be generated in sync with the animation tree
@@ -58,7 +58,6 @@ static func load_character_json(file_path: String):
 
 static func generate_animation(anim_name: String, frames: Array, frame_index: int) -> Dictionary:
 	var animation := Animation.new()
-	print(anim_name)
 	var track_index = animation.add_track(Animation.TYPE_VALUE)
 	animation.track_set_path(track_index, "Sprite:frame")
 	var anim_length := 0.0
@@ -68,10 +67,10 @@ static func generate_animation(anim_name: String, frames: Array, frame_index: in
 		frame_index += 1
 	animation.track_insert_key(track_index, anim_length, frame_index-1)	
 	animation.length = anim_length
-	
+
 	var anim_node := AnimationNodeAnimation.new()
 	anim_node.animation = anim_name
-		
+	
 	return {"animation": animation, "frame_index": frame_index, "animation_node": anim_node}
 
 static func create_character(character_data: Dictionary):
@@ -84,7 +83,8 @@ static func create_character(character_data: Dictionary):
 	var sprite: Sprite = character_root.get_node("Sprite")
 	var sprite_sheet := generate_character_sprite_sheet(character_data)
 	sprite.texture = sprite_sheet["texture"]
-	sprite.hframes = sprite_sheet["frame_count"]
+	sprite.hframes = sprite_sheet["hframes"]
+	sprite.vframes = sprite_sheet["vframes"]
 	
 	var player: AnimationPlayer = character_root.get_node("AnimationPlayer")
 	var state_machine: AnimationNodeStateMachine = character_root.get_node("AnimationTree").tree_root
@@ -153,67 +153,29 @@ static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
 	texture.set_size_override(size)
 	return texture
 
-static func b64_to_audio_stream(b64_mp3: String) -> AudioStream:
-	var audio_stream := AudioStreamMP3.new()
-	var buffer = Marshalls.base64_to_raw(b64_mp3)	
-	audio_stream.set_data(buffer)
-	var haha := AudioStreamRandomPitch.new()
-	haha.audio_stream = audio_stream
-	haha.random_pitch = 1.5
-	return haha
-
 static func frame_to_texture(animation_frame: Dictionary, size: Vector2) -> ImageTexture:
 	return b64_to_texture(animation_frame["base64EncodedImage"], size)
 
-static func create_character_preview(character_data: Dictionary, size: Vector2=Vector2(200, 200)):
-	var animated_texture := AnimatedTexture.new()
-	animated_texture.frames = len(character_data["previewAnimation"])
-	
-	# Create textures from frames
-	var f = 0
-	for frame in character_data["previewAnimation"]:
-		var texture := frame_to_texture(frame, Vector2(150,150))
-		animated_texture.set_frame_texture(f, texture)
-		f += 1
-
-	var texture_rect := TextureRect.new()
-	texture_rect.texture = animated_texture
-	
-	return texture_rect
-
-static func generate_character_sprite_frames(character_data: Dictionary) -> SpriteFrames:
-	var sprite_frames := SpriteFrames.new()
-	
-	# Create animations for each action
-	for action in character_data["actions"]:
-		var anim_name : String = action["type"]
-		sprite_frames.add_animation(anim_name) # light_punch, super, etc.
-		for frame in action["animation"]:
-			sprite_frames.add_frame(anim_name, frame_to_texture(frame, Vector2(300, 300)))
-	
-	# Create animations for different states
-	for state in state_animation_names:
-		sprite_frames.add_animation(state)
-		for frame in character_data["stateAnimations"][state]:
-			sprite_frames.add_frame(state, frame_to_texture(frame, Vector2(300, 300)))
-
-	return sprite_frames
-	
 static func generate_character_sprite_sheet(character_data: Dictionary) -> Dictionary:
 	# First calculate number of frames so we can determine width of spritesheet
 	var frame_count := 0
 	
+	var state_frame_count := 0
+	var action_frame_count := 0
+	
 	for state in state_animation_names:
 		frame_count += len(character_data["stateAnimations"][state])
+		state_frame_count += len(character_data["stateAnimations"][state])
 	
 	for action in character_data["actions"]:
 		frame_count += len(action)
+		action_frame_count += len(action)
 	
 	var frame_size = 400
 	
 	# Create the placeholder image in the correct size
 	var image := Image.new()
-	image.create(frame_size * frame_count,frame_size,false,Image.FORMAT_RGBA8)
+	image.create(frame_size * max(state_frame_count, action_frame_count), frame_size * 2, false, Image.FORMAT_RGBA8)
 	image.fill(Color.transparent)
 
 	# Copy each frame into the spritesheet image
@@ -223,16 +185,17 @@ static func generate_character_sprite_sheet(character_data: Dictionary) -> Dicti
 			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
 			var frame_image := frame_texture.get_data()
 			var frame_pos := Vector2(frame_index*frame_size, 0)
-			image.blit_rect(frame_image, Rect2(0,0, frame_size, frame_size), frame_pos)
-			frame_index += 1
+			image.blit_rect(frame_image, Rect2(0, 0, frame_size, frame_size), frame_pos)
+			frame_index += 1	
 	
+	frame_index = 0
 	for action in character_data["actions"]:
 		for frame in action["animation"]:
 			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
 			var frame_image := frame_texture.get_data()
-			var frame_pos := Vector2(frame_index*frame_size, 0)
+			var frame_pos := Vector2(frame_index*frame_size, frame_size)
 			# Copy frame into correct spot in spritesheet
-			image.blit_rect(frame_image, Rect2(0,0, frame_size, frame_size), frame_pos)
+			image.blit_rect(frame_image, Rect2(0, 0, frame_size, frame_size), frame_pos)
 			frame_index += 1
 
 	var texture := ImageTexture.new()
@@ -240,5 +203,6 @@ static func generate_character_sprite_sheet(character_data: Dictionary) -> Dicti
 	
 	return {
 		"texture": texture,
-		"frame_count": frame_count
+		"hframes": max(state_frame_count, action_frame_count),
+		"vframes": 2
 	}
