@@ -101,23 +101,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Start" type="Button" parent="Buttons"]
+[node name="Testing" type="Button" parent="Buttons"]
 margin_right = 186.0
 margin_bottom = 49.0
 focus_neighbour_top = NodePath("../Quit")
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
-text = "Start Game"
+text = "Testing"
 
 [node name="Quit" type="Button" parent="Buttons"]
 margin_top = 53.0
 margin_right = 186.0
 margin_bottom = 102.0
-focus_neighbour_bottom = NodePath("../Start")
+focus_neighbour_bottom = NodePath("../Testing")
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Quit"
 
-[connection signal="pressed" from="Buttons/Start" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="Buttons/Testing" to="." method="_on_TestingButton_pressed"]
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_QuitButton_pressed"]
