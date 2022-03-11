@@ -43,7 +43,7 @@ static func load_character_json(file_path: String):
 	"""Parses a character JSON file."""
 	
 	var file = File.new()
-	file.open("user://" + file_path, File.READ)
+	file.open(file_path, File.READ)
 	var content = file.get_as_text()
 	file.close()
 	
