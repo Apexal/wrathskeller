@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/actors/players/player.gd" type="Script" id=1]
+
+[sub_resource type="Animation" id=73]
+resource_name = "test"
+
+[sub_resource type="AnimationNodeAnimation" id=74]
+animation = "test"
+
+[sub_resource type="AnimationNodeStateMachine" id=71]
+resource_local_to_scene = true
+states/test/node = SubResource( 74 )
+states/test/position = Vector2( 509, 120.39 )
+start_node = "test"
+graph_offset = Vector2( 0, 26.3903 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=72]
+
+[sub_resource type="RectangleShape2D" id=60]
+extents = Vector2( 36.5, 138 )
+
+[sub_resource type="RectangleShape2D" id=61]
+extents = Vector2( 54, 20.8253 )
+
+[node name="CharacterTemplate" type="KinematicBody2D"]
+position = Vector2( 100, 394 )
+scale = Vector2( 1, 1.01104 )
+script = ExtResource( 1 )
+gravity = 20.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/test = SubResource( 73 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 71 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 72 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="BodyCollider" type="CollisionShape2D" parent="."]
+position = Vector2( -15, 21 )
+scale = Vector2( 0.999997, 1 )
+shape = SubResource( 60 )
+
+[node name="HitArea" type="Area2D" parent="."]
+
+[node name="HitCollider" type="CollisionShape2D" parent="HitArea"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 106, -80.1155 )
+shape = SubResource( 61 )
+disabled = true
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Actions" type="Node" parent="."]
+
+[node name="Action" type="Label" parent="."]
+margin_left = -35.0
+margin_top = -145.395
+margin_right = 5.0
+margin_bottom = -131.395
+text = "Action"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="State" type="Label" parent="."]
+margin_left = -34.0
+margin_top = -166.166
+margin_right = 6.0
+margin_bottom = -152.166
+text = "State"
+__meta__ = {
+"_edit_use_anchors_": false
+}
