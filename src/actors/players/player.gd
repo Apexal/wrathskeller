@@ -48,9 +48,18 @@ func _determine_action() -> void:
 				break # No need to continue looping
 
 func _start_action(action_index: int):
-	"""Start an action, wait for it to complete, and end the action."""
+	"""Start an action, wait for it to complete, and end the action. Also plays action sound effect if applicable."""
 	_current_action_index = action_index
+	
+	# If an audio stream is set, play it
+	if _actions[_current_action_index].sound_effect:
+		$AudioStreamPlayer.stream = _actions[_current_action_index].sound_effect
+		$AudioStreamPlayer.play()
+	
+	# Wait till the action is complete
 	yield(get_tree().create_timer(_actions[action_index].action_time), "timeout")
+	
+	# Reset so no action is set now
 	_current_action_index = NO_ACTION
 
 func _determine_movement(input_dir: Vector2) -> void:

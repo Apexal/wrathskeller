@@ -141,9 +141,17 @@ static func create_character(character_data: Dictionary):
 		action_node.animation_name = anim_name
 		action_node.type = action["type"]
 		action_node.action_time = animation_result["animation"].length
+		if "soundEffect" in action and action["soundEffect"]:
+			action_node.sound_effect = b64_to_audio_stream_mp3(action["soundEffect"]["base64EncodedAudio"])
 		character_root.get_node("Actions").add_child(action_node)
 		
 	return character_root
+
+static func b64_to_audio_stream_mp3(b64_mp3: String) -> AudioStreamMP3:
+	var stream := AudioStreamMP3.new()
+	var buffer := Marshalls.base64_to_raw(b64_mp3)
+	stream.data = buffer
+	return stream
 
 static func b64_to_texture(b64_png: String, size: Vector2) -> ImageTexture:
 	"""Converts a base64-encoded PNG image to an ImageTexture with the desired size."""
