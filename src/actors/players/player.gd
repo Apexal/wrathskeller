@@ -96,16 +96,19 @@ func _determine_movement(input_dir: Vector2) -> void:
 
 func _determine_animation(move_state: int, action_index: int) -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
-	if action_index != NO_ACTION: 
-		state_machine.travel(_actions[action_index].animation_name)
-	elif move_state == MOVE_STATE.IDLING:
-		state_machine.travel("idle")
-	elif move_state == MOVE_STATE.WALKING:
-		state_machine.travel("walk")
-	elif move_state == MOVE_STATE.CROUCHING:
-		state_machine.travel("crouch")
-	elif move_state == MOVE_STATE.JUMPING:
-		state_machine.travel("jump")
+	if _is_alive:
+		if action_index != NO_ACTION: 
+			state_machine.travel(_actions[action_index].animation_name)
+		elif move_state == MOVE_STATE.IDLING:
+			state_machine.travel("idle")
+		elif move_state == MOVE_STATE.WALKING:
+			state_machine.travel("walk")
+		elif move_state == MOVE_STATE.CROUCHING:
+			state_machine.travel("crouch")
+		elif move_state == MOVE_STATE.JUMPING:
+			state_machine.travel("jump")
+	else:
+		state_machine.travel("lose")		
 
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()

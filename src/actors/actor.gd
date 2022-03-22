@@ -11,7 +11,7 @@ signal died
 
 const FLOOR_NORMAL = Vector2.UP # The direction of the floor, for move_and_slide
 
-export(Vector2) var speed := Vector2(150.0, 750.0) # x is walk speed, y is jump speed
+var speed := Vector2(150.0, 850.0) # x is walk speed, y is jump speed
 var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity"))
 var max_health := 100.0
 
