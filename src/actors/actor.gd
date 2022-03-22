@@ -33,7 +33,7 @@ func take_damage(damage_amount: float) -> float:
 	When `_is_alive` is false or damage is a negative amount, this has no effect.
 	"""
 
-	if _is_alive:
+	if not _is_alive:
 		return 0.0
 	
 	# Don't allow negative damage (healing)

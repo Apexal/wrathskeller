@@ -117,3 +117,10 @@ func _process(delta: float) -> void:
 
 	$State.text = "Move: " + String(_current_move_state)
 	$Action.text = "Action: " + String(_current_action_index)
+	$Health.text = "Health: " + String(_health)
+
+func _on_HitArea_body_entered(body):
+	# Check that the body that entered this player's hit area is another player
+	if body is Actor and _current_action_index != NO_ACTION:
+		print(name, " hit ", body.name, " with action ", _actions[_current_action_index].name)
+		body.take_damage(_actions[_current_action_index].damage)
