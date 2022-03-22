@@ -3,9 +3,8 @@ extends Actor
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
 # Player selection variables
-export(int, 1, 2) var player_number := 1
+var player_number := 1
 
-const DAMAGE_COOL_DOWN := 0.25 # How many seconds after being damaged are you invincible
 onready var _actions := $Actions.get_children() # Loads actions from nodes
 
 enum MOVE_STATE {IDLING, WALKING, DASHING, JUMPING, CROUCHING, BLOCKING}
