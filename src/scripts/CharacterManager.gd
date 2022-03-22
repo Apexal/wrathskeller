@@ -62,15 +62,46 @@ static func generate_animation(anim_name: String, frames: Array, frame_index: in
 	# Add animation track for the sprite frame
 	var frame_track_index = animation.add_track(Animation.TYPE_VALUE)
 	animation.track_set_path(frame_track_index, "Sprite:frame")
+	
+	var body_collider_extents_track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(body_collider_extents_track_index, "BodyCollider:scale")
+	
+	var body_collider_pos_track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(body_collider_pos_track_index, "BodyCollider:position")
+	
+	var hit_collider_disabled_track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(hit_collider_disabled_track_index, "HitArea/HitCollider:disabled")
+	
+	var hit_collider_extents_track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(hit_collider_extents_track_index, "HitArea/HitCollider:scale")
+	
+	var hit_collider_pos_track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(hit_collider_pos_track_index, "HitArea/HitCollider:position")
+	
+	
 	var anim_length := 0.0
 	for frame in frames:
 		animation.track_insert_key(frame_track_index, anim_length, frame_index)
+		
+		var body_coll_size := Vector2(frame["bodyCollider"]["size"]["x"], frame["bodyCollider"]["size"]["y"])
+		var body_coll_pos := Vector2(frame["bodyCollider"]["position"]["x"], frame["bodyCollider"]["position"]["y"])
+		animation.track_insert_key(body_collider_extents_track_index, anim_length, body_coll_size)
+		animation.track_insert_key(body_collider_pos_track_index, anim_length, body_coll_pos)
+		
+		if frame["hitCollider"]["isEnabled"]:
+			animation.track_insert_key(hit_collider_disabled_track_index, anim_length, false)
+			var hit_coll_size := Vector2(frame["hitCollider"]["size"]["x"], frame["hitCollider"]["size"]["y"])
+			var hit_coll_pos := Vector2(frame["hitCollider"]["position"]["x"], frame["hitCollider"]["position"]["y"])
+			animation.track_insert_key(hit_collider_extents_track_index, anim_length, hit_coll_size)
+			animation.track_insert_key(hit_collider_pos_track_index, anim_length, hit_coll_pos)
+		else:
+			animation.track_insert_key(hit_collider_disabled_track_index, anim_length, true)
+		
 		anim_length += frame["durationInS"]
 		frame_index += 1
+
 	animation.track_insert_key(frame_track_index, anim_length, frame_index-1)	
 	animation.length = anim_length
-	
-	# TODO: Animate the colliders
 	
 	var anim_node := AnimationNodeAnimation.new()
 	anim_node.animation = anim_name

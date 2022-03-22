@@ -18,10 +18,10 @@ graph_offset = Vector2( 0, 26.3903 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=72]
 
 [sub_resource type="RectangleShape2D" id=60]
-extents = Vector2( 36.5, 138 )
+extents = Vector2( 1, 1 )
 
 [sub_resource type="RectangleShape2D" id=61]
-extents = Vector2( 54, 20.8253 )
+extents = Vector2( 1, 1 )
 
 [node name="CharacterTemplate" type="KinematicBody2D"]
 position = Vector2( 100, 394 )
@@ -41,7 +41,6 @@ parameters/playback = SubResource( 72 )
 [node name="Sprite" type="Sprite" parent="."]
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
-position = Vector2( -15, 21 )
 scale = Vector2( 0.999997, 1 )
 shape = SubResource( 60 )
 
@@ -49,7 +48,6 @@ shape = SubResource( 60 )
 
 [node name="HitCollider" type="CollisionShape2D" parent="HitArea"]
 modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 106, -80.1155 )
 shape = SubResource( 61 )
 disabled = true
 
