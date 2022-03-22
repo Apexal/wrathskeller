@@ -11,12 +11,16 @@ signal died
 
 const FLOOR_NORMAL = Vector2.UP # The direction of the floor, for move_and_slide
 
-export(Vector2) var speed := Vector2(150.0, 750.0) # x is walk speed, y is jump speed
-export(float) var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity"))
-export(float) var max_health := 100.0
+var speed := Vector2(150.0, 850.0) # x is walk speed, y is jump speed
+var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity"))
+var max_health := 100.0
+
+# TODO: Use
+const DAMAGE_COOL_DOWN := 0.25 # How many seconds after being damaged are you invincible
 
 var _health := max_health
 var _is_alive := true # Always check this before doing things!
+var _damage_knockback := Vector2(100, -200)
 
 var _velocity := Vector2.ZERO # Movement velocity
 
@@ -33,7 +37,7 @@ func take_damage(damage_amount: float) -> float:
 	When `_is_alive` is false or damage is a negative amount, this has no effect.
 	"""
 
-	if _is_alive:
+	if not _is_alive:
 		return 0.0
 	
 	# Don't allow negative damage (healing)
@@ -43,16 +47,19 @@ func take_damage(damage_amount: float) -> float:
 	_health -= damage_amount
 	emit_signal("health_changed", _health)
 	
-	# Detect DEATH
+	# Detect DEATH ;(
 	if _health <= 0:
 		_health = 0
 		_is_alive = false
-		emit_signal("died")
-
+		emit_signal("died") # he dead
+	
+	# Apply knockback in the proper direction
+	_velocity = _damage_knockback * Vector2(-1, 1) if _is_flipped else _damage_knockback
+	
 	return _health
 
 func _face_target(delta):
-	# Always make sure to face the target, if set
+	"""After flip_timer seconds, flips the actor to face its target if it is set."""
 	if target_to_face:
 		if (_is_flipped and position.x > target_to_face.position.x) or (not _is_flipped and position.x < target_to_face.position.x):
 			_flip_timer -= delta
@@ -67,8 +74,10 @@ func _physics_process(delta):
 	
 	It applies gravity to the current velocity, applies the velocity, and faces the target. 
 	"""
-
+	
+	
 	_face_target(delta)
 	_velocity.y += gravity
 	_velocity.y = min(1000, _velocity.y) # Terminal velocity
+	
 	move_and_slide(_velocity, FLOOR_NORMAL)

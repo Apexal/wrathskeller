@@ -135,7 +135,7 @@ static func create_character(character_data: Dictionary):
 		frame_index = animation_result["frame_index"]
 		
 		# Some animations should loop
-		if state == "idle" or state == "walk" or state == "grappled" or state == "dash" or state == "win" or state == "lose":
+		if state == "idle" or state == "walk" or state == "grappled" or state == "dash" or state == "win":
 			animation_result["animation"].loop = true
 
 		# Add animation in player
@@ -169,6 +169,7 @@ static func create_character(character_data: Dictionary):
 		
 		# Create action node
 		var action_node: Action = Action.new()
+		action_node.name = action["name"]
 		action_node.animation_name = anim_name
 		action_node.type = action["type"]
 		action_node.action_time = animation_result["animation"].length

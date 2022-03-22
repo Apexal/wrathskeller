@@ -3,9 +3,8 @@ extends Actor
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
 # Player selection variables
-export(int, 1, 2) var player_number := 1
+var player_number := 1
 
-const DAMAGE_COOL_DOWN := 0.25 # How many seconds after being damaged are you invincible
 onready var _actions := $Actions.get_children() # Loads actions from nodes
 
 enum MOVE_STATE {IDLING, WALKING, DASHING, JUMPING, CROUCHING, BLOCKING}
@@ -34,12 +33,18 @@ func _get_input_direction() -> Vector2:
 	y+ is crouch
 	y- is jump
 	"""
+	if not _is_alive:
+		return Vector2.ZERO
+
 	return Vector2(
 		Input.get_action_strength(_player_input("move_right")) - Input.get_action_strength(_player_input("move_left")),
 		-1 if is_on_floor() and Input.is_action_just_pressed(_player_input("jump")) else (1.0 if Input.is_action_pressed(_player_input("down")) else 0.0)
 	)
  
 func _determine_action() -> void:
+	if not _is_alive:
+		return
+
 	if _current_action_index == NO_ACTION:
 		for i in len(_actions):
 			var action: Action = _actions[i]
@@ -97,16 +102,19 @@ func _determine_movement(input_dir: Vector2) -> void:
 
 func _determine_animation(move_state: int, action_index: int) -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
-	if action_index != NO_ACTION: 
-		state_machine.travel(_actions[action_index].animation_name)
-	elif move_state == MOVE_STATE.IDLING:
-		state_machine.travel("idle")
-	elif move_state == MOVE_STATE.WALKING:
-		state_machine.travel("walk")
-	elif move_state == MOVE_STATE.CROUCHING:
-		state_machine.travel("crouch")
-	elif move_state == MOVE_STATE.JUMPING:
-		state_machine.travel("jump")
+	if _is_alive:
+		if action_index != NO_ACTION: 
+			state_machine.travel(_actions[action_index].animation_name)
+		elif move_state == MOVE_STATE.IDLING:
+			state_machine.travel("idle")
+		elif move_state == MOVE_STATE.WALKING:
+			state_machine.travel("walk")
+		elif move_state == MOVE_STATE.CROUCHING:
+			state_machine.travel("crouch")
+		elif move_state == MOVE_STATE.JUMPING:
+			state_machine.travel("jump")
+	else:
+		state_machine.travel("lose")		
 
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
@@ -117,3 +125,10 @@ func _process(delta: float) -> void:
 
 	$State.text = "Move: " + String(_current_move_state)
 	$Action.text = "Action: " + String(_current_action_index)
+	$Health.text = "Health: " + String(_health)
+
+func _on_HitArea_body_entered(body):
+	# Check that the body that entered this player's hit area is another player
+	if body is Actor and _current_action_index != NO_ACTION:
+		print(name, " hit ", body.name, " with action ", _actions[_current_action_index].name)
+		body.take_damage(_actions[_current_action_index].damage)
