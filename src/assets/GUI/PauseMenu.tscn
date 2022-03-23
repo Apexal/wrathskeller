@@ -1,0 +1,54 @@
+[gd_scene format=2]
+
+[node name="PauseMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundPanel" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.262745, 0.239216, 0.235294, 0.776471 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 400.0
+margin_top = 100.0
+margin_right = 482.0
+margin_bottom = 190.0
+rect_min_size = Vector2( 3, 3 )
+rect_scale = Vector2( 3, 3 )
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 82.0
+margin_bottom = 14.0
+text = "Paused"
+align = 1
+valign = 1
+
+[node name="Control" type="Control" parent="CenterContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 82.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 6 )
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 82.0
+margin_bottom = 60.0
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 70.0
+margin_right = 82.0
+margin_bottom = 90.0
+text = "Quit Game"
