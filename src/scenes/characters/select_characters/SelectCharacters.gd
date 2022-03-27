@@ -2,7 +2,9 @@ extends Control
 
 export(Vector2) var character_texture_size := Vector2(200, 200)
 export(Texture) var player1_overlay_texture
+export(Texture) var player1_overlay_selected_texture
 export(Texture) var player2_overlay_texture
+export(Texture) var player2_overlay_selected_texture
 
 onready var player1_overlay = $Player1Overlay
 onready var player2_overlay = $Player2Overlay
@@ -32,15 +34,14 @@ func _generate_animated_texture(character_data: Dictionary, size: Vector2) -> An
 func _ready():
 	CharacterManager.player1 = null
 	CharacterManager.player2 = null
-	
+
 	player1_overlay.texture = player1_overlay_texture
 	player1_overlay.expand = true
 	player1_overlay.rect_size = character_texture_size
-	
+
 	player2_overlay.texture = player2_overlay_texture
 	player2_overlay.expand = true
 	player2_overlay.rect_size = character_texture_size
-	
 
 	# Iterate through character files
 	_character_files = CharacterManager.list_character_files()
@@ -85,11 +86,15 @@ func _process(delta):
 	elif Input.is_action_just_pressed("player_2_move_right"):
 		_handle_player_input(2, 1)
 	
-	if Input.is_action_just_pressed("player_1_light_punch"):
+	# Handle selections
+	if Input.is_action_just_pressed("player_1_light_punch") and _player1_index != null:
+		player1_overlay.texture = player1_overlay_selected_texture
 		CharacterManager.player1 = _character_files[_player1_index]
 	
-	if Input.is_action_just_pressed("player_2_light_punch"):
+	if Input.is_action_just_pressed("player_2_light_punch") and _player2_index != null:
+		player2_overlay.texture = player2_overlay_selected_texture
 		CharacterManager.player2 = _character_files[_player2_index]
 	
+	# When both characters are chosen, go to next scene
 	if CharacterManager.player1 and CharacterManager.player2:
 		get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
