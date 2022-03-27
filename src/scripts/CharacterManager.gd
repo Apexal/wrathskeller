@@ -1,5 +1,13 @@
 extends Node
 
+###########################
+
+var player1 = null
+
+var player2 = null
+
+###########################
+
 const character_template = preload("res://src/actors/players/CharacterTemplate.tscn")
 
 # The recognized state animations in the exact ORDER they must be processed in
