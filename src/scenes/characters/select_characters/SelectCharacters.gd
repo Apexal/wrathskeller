@@ -12,6 +12,8 @@ onready var player2_overlay = $Player2Overlay
 var _character_files
 var _character_count := 0
 
+var _is_player1_selected := false
+var _is_player2_selected := false
 var _player1_index = null
 var _player2_index = null
 
@@ -76,25 +78,29 @@ func _handle_player_input(player_num: int, change: int):
 		player2_overlay.rect_global_position = $GridContainer.get_children()[_player2_index].rect_global_position
 
 func _process(delta):
-	if Input.is_action_just_pressed("player_1_move_left"):
-		_handle_player_input(1, -1)
-	elif Input.is_action_just_pressed("player_1_move_right"):
-		_handle_player_input(1, 1)
+	if not _is_player1_selected:
+		if Input.is_action_just_pressed("player_1_move_left"):
+			_handle_player_input(1, -1)
+		elif Input.is_action_just_pressed("player_1_move_right"):
+			_handle_player_input(1, 1)
 	
-	if Input.is_action_just_pressed("player_2_move_left"):
-		_handle_player_input(2, -1)
-	elif Input.is_action_just_pressed("player_2_move_right"):
-		_handle_player_input(2, 1)
+	if not _is_player2_selected:
+		if Input.is_action_just_pressed("player_2_move_left"):
+			_handle_player_input(2, -1)
+		elif Input.is_action_just_pressed("player_2_move_right"):
+			_handle_player_input(2, 1)
 	
 	# Handle selections
-	if Input.is_action_just_pressed("player_1_light_punch") and _player1_index != null:
+	if not _is_player1_selected and Input.is_action_just_pressed("player_1_light_punch") and _player1_index != null:
 		player1_overlay.texture = player1_overlay_selected_texture
 		CharacterManager.player1 = _character_files[_player1_index]
-	
-	if Input.is_action_just_pressed("player_2_light_punch") and _player2_index != null:
+		_is_player1_selected = true
+		
+	if not _is_player2_selected and Input.is_action_just_pressed("player_2_light_punch") and _player2_index != null:
 		player2_overlay.texture = player2_overlay_selected_texture
 		CharacterManager.player2 = _character_files[_player2_index]
-	
+		_is_player2_selected = true
+		
 	# When both characters are chosen, go to next scene
 	if CharacterManager.player1 and CharacterManager.player2:
 		get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
