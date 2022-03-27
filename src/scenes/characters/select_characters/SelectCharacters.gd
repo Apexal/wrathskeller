@@ -8,6 +8,7 @@ export(Texture) var player2_overlay_selected_texture
 
 onready var player1_overlay = $Player1Overlay
 onready var player2_overlay = $Player2Overlay
+onready var character_grid = $VBoxContainer/GridContainer
 
 var _character_files
 var _character_count := 0
@@ -57,10 +58,18 @@ func _ready():
 		texture_rect.texture = anim_texture
 		
 		var audio_player := AudioStreamPlayer.new()
+		audio_player.name = "Enter"
 		if len(character_data["stateSoundEffects"]["enter"]) > 0:
 			audio_player.stream = CharacterManager.b64_to_audio_stream_mp3(character_data["stateSoundEffects"]["enter"][0]["base64EncodedAudio"])
 		texture_rect.add_child(audio_player)
-		$VBoxContainer/GridContainer.add_child(texture_rect)
+		
+		var audio_player2 := AudioStreamPlayer.new()
+		audio_player2.name = "Win"
+		if len(character_data["stateSoundEffects"]["win"]) > 0:
+			audio_player2.stream = CharacterManager.b64_to_audio_stream_mp3(character_data["stateSoundEffects"]["win"][0]["base64EncodedAudio"])
+		texture_rect.add_child(audio_player2)
+
+		character_grid.add_child(texture_rect)
 
 func _handle_player_input(player_num: int, change: int):
 	if player_num == 1:
@@ -70,8 +79,8 @@ func _handle_player_input(player_num: int, change: int):
 			_player1_index = (_player1_index - 1) % _character_count
 
 		player1_overlay.visible = true	
-		player1_overlay.rect_global_position = $VBoxContainer/GridContainer.get_children()[_player1_index].rect_global_position
-		$VBoxContainer/GridContainer.get_children()[_player1_index].get_child(0).play()
+		player1_overlay.rect_global_position = character_grid.get_children()[_player1_index].rect_global_position
+		character_grid.get_children()[_player1_index].get_child(0).play()
 	elif player_num == 2:
 		if _player2_index == null:
 			_player2_index = 0
@@ -79,8 +88,20 @@ func _handle_player_input(player_num: int, change: int):
 			_player2_index = (_player2_index - 1) % _character_count
 
 		player2_overlay.visible = true	
-		player2_overlay.rect_global_position = $VBoxContainer/GridContainer.get_children()[_player2_index].rect_global_position
-		$VBoxContainer/GridContainer.get_children()[_player2_index].get_child(0).play()
+		player2_overlay.rect_global_position = character_grid.get_children()[_player2_index].rect_global_position
+		character_grid.get_children()[_player2_index].get_child(0).play()
+
+func _handle_player_select(player_num: int):
+	if player_num == 1:
+		player1_overlay.texture = player1_overlay_selected_texture
+		CharacterManager.player1 = _character_files[_player1_index]
+		_is_player1_selected = true
+		character_grid.get_children()[_player1_index].get_child(1).play()
+	elif player_num == 2:
+		player2_overlay.texture = player2_overlay_selected_texture
+		CharacterManager.player2 = _character_files[_player2_index]
+		_is_player2_selected = true
+		character_grid.get_children()[_player2_index].get_child(1).play()
 
 func _process(delta):
 	if not _is_player1_selected:
@@ -97,15 +118,12 @@ func _process(delta):
 
 	# Handle selections
 	if not _is_player1_selected and Input.is_action_just_pressed("player_1_light_punch") and _player1_index != null:
-		player1_overlay.texture = player1_overlay_selected_texture
-		CharacterManager.player1 = _character_files[_player1_index]
-		_is_player1_selected = true
+		_handle_player_select(1)
 
 	if not _is_player2_selected and Input.is_action_just_pressed("player_2_light_punch") and _player2_index != null:
-		player2_overlay.texture = player2_overlay_selected_texture
-		CharacterManager.player2 = _character_files[_player2_index]
-		_is_player2_selected = true
+		_handle_player_select(2)
 
 	# When both characters are chosen, go to next scene
 	if CharacterManager.player1 and CharacterManager.player2:
+		yield(get_tree().create_timer(2.0), "timeout")
 		get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
