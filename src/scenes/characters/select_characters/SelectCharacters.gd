@@ -51,13 +51,12 @@ func _ready():
 	for character_file in _character_files:
 		var character_data = CharacterManager.load_character_json("res://test_characters/" + character_file)
 		var anim_texture := _generate_animated_texture(character_data, character_texture_size)
-		
+
 		var texture_rect := TextureRect.new()
 		texture_rect.name = character_data["name"]
 		texture_rect.texture = anim_texture
-		texture_rect
-		
-		$GridContainer.add_child(texture_rect)
+
+		$VBoxContainer/GridContainer.add_child(texture_rect)
 
 func _handle_player_input(player_num: int, change: int):
 	if player_num == 1:
@@ -65,9 +64,9 @@ func _handle_player_input(player_num: int, change: int):
 			_player1_index = 0
 		else:
 			_player1_index = (_player1_index - 1) % _character_count
-		
+
 		player1_overlay.visible = true	
-		player1_overlay.rect_global_position = $GridContainer.get_children()[_player1_index].rect_global_position
+		player1_overlay.rect_global_position = $VBoxContainer/GridContainer.get_children()[_player1_index].rect_global_position
 	elif player_num == 2:
 		if _player2_index == null:
 			_player2_index = 0
@@ -75,7 +74,7 @@ func _handle_player_input(player_num: int, change: int):
 			_player2_index = (_player2_index - 1) % _character_count
 
 		player2_overlay.visible = true	
-		player2_overlay.rect_global_position = $GridContainer.get_children()[_player2_index].rect_global_position
+		player2_overlay.rect_global_position = $VBoxContainer/GridContainer.get_children()[_player2_index].rect_global_position
 
 func _process(delta):
 	if not _is_player1_selected:
@@ -83,24 +82,24 @@ func _process(delta):
 			_handle_player_input(1, -1)
 		elif Input.is_action_just_pressed("player_1_move_right"):
 			_handle_player_input(1, 1)
-	
+
 	if not _is_player2_selected:
 		if Input.is_action_just_pressed("player_2_move_left"):
 			_handle_player_input(2, -1)
 		elif Input.is_action_just_pressed("player_2_move_right"):
 			_handle_player_input(2, 1)
-	
+
 	# Handle selections
 	if not _is_player1_selected and Input.is_action_just_pressed("player_1_light_punch") and _player1_index != null:
 		player1_overlay.texture = player1_overlay_selected_texture
 		CharacterManager.player1 = _character_files[_player1_index]
 		_is_player1_selected = true
-		
+
 	if not _is_player2_selected and Input.is_action_just_pressed("player_2_light_punch") and _player2_index != null:
 		player2_overlay.texture = player2_overlay_selected_texture
 		CharacterManager.player2 = _character_files[_player2_index]
 		_is_player2_selected = true
-		
+
 	# When both characters are chosen, go to next scene
 	if CharacterManager.player1 and CharacterManager.player2:
 		get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
