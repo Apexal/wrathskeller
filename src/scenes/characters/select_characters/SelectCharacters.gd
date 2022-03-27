@@ -55,7 +55,11 @@ func _ready():
 		var texture_rect := TextureRect.new()
 		texture_rect.name = character_data["name"]
 		texture_rect.texture = anim_texture
-
+		
+		var audio_player := AudioStreamPlayer.new()
+		if len(character_data["stateSoundEffects"]["enter"]) > 0:
+			audio_player.stream = CharacterManager.b64_to_audio_stream_mp3(character_data["stateSoundEffects"]["enter"][0]["base64EncodedAudio"])
+		texture_rect.add_child(audio_player)
 		$VBoxContainer/GridContainer.add_child(texture_rect)
 
 func _handle_player_input(player_num: int, change: int):
@@ -67,6 +71,7 @@ func _handle_player_input(player_num: int, change: int):
 
 		player1_overlay.visible = true	
 		player1_overlay.rect_global_position = $VBoxContainer/GridContainer.get_children()[_player1_index].rect_global_position
+		$VBoxContainer/GridContainer.get_children()[_player1_index].get_child(0).play()
 	elif player_num == 2:
 		if _player2_index == null:
 			_player2_index = 0
@@ -75,6 +80,7 @@ func _handle_player_input(player_num: int, change: int):
 
 		player2_overlay.visible = true	
 		player2_overlay.rect_global_position = $VBoxContainer/GridContainer.get_children()[_player2_index].rect_global_position
+		$VBoxContainer/GridContainer.get_children()[_player2_index].get_child(0).play()
 
 func _process(delta):
 	if not _is_player1_selected:
