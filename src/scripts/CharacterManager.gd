@@ -22,7 +22,7 @@ static func list_character_files() -> Array:
 
 	var character_files = []
 	var dir = Directory.new()
-	if dir.open("user://") == OK:
+	if dir.open("res://test_characters") == OK:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
