@@ -2,11 +2,11 @@ extends Control
 
 export(float) var speed = 40.0
 
-onready var label = $HBoxContainer
+onready var label = $Text
 
 func _change_scene():
 	# TODO: determine how to fade to black before changing
-	set_modulate(lerp(get_modulate(), Color(0,0,0,1), 0.2))
+#	set_modulate(lerp(get_modulate(), Color(0,0,0,1), 0.2))
 	get_tree().change_scene("res://src/scenes/menu/Menu.tscn")
 
 func _physics_process(delta):
