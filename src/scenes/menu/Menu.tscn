@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/scenes/menu/Title.gd" type="Script" id=1]
 [ext_resource path="res://src/assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/assets/ui_theme.theme" type="Theme" id=4]
 [ext_resource path="res://src/scenes/menu/Menu.gd" type="Script" id=5]
 [ext_resource path="res://src/scenes/menu/Subtitle.gd" type="Script" id=6]
+[ext_resource path="res://src/scenes/menu/Version.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=5]
 resource_name = "Subtitle"
@@ -124,6 +125,28 @@ focus_neighbour_bottom = NodePath("../Testing")
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Quit"
+
+[node name="VersionPanel" type="Panel" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 15.0
+margin_top = 560.0
+margin_right = 115.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 100, 5 )
+size_flags_vertical = 4
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VersionLabel" type="Label" parent="VersionPanel"]
+modulate = Color( 0.356863, 0.117647, 0.117647, 1 )
+margin_right = 40.0
+margin_bottom = 21.0
+text = "Version
+"
+align = 1
+valign = 1
 
 [connection signal="pressed" from="Buttons/Testing" to="." method="_on_TestingButton_pressed"]
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_QuitButton_pressed"]
