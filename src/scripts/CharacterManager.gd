@@ -1,5 +1,13 @@
 extends Node
 
+###########################
+
+var player1 = null
+
+var player2 = null
+
+###########################
+
 const character_template = preload("res://src/actors/players/CharacterTemplate.tscn")
 
 # The recognized state animations in the exact ORDER they must be processed in
@@ -22,7 +30,7 @@ static func list_character_files() -> Array:
 
 	var character_files = []
 	var dir = Directory.new()
-	if dir.open("user://") == OK:
+	if dir.open("res://test_characters") == OK:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
