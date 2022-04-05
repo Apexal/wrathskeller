@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/empac_stage.jpg-72e02d8cc4e8f15febb81ac0f63e40ce.stex"
+path="res://.import/Square.PNG-6c258f7400ffc8957f6feb4a198f8c20.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/scenes/training/empac_stage.jpg"
-dest_files=[ "res://.import/empac_stage.jpg-72e02d8cc4e8f15febb81ac0f63e40ce.stex" ]
+source_file="res://documentation/images/Square.PNG"
+dest_files=[ "res://.import/Square.PNG-6c258f7400ffc8957f6feb4a198f8c20.stex" ]
 
 [params]
 
