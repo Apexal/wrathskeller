@@ -76,7 +76,7 @@ func _handle_player_input(player_num: int, change: int):
 		if _player1_index == null:
 			_player1_index = 0
 		else:
-			_player1_index = (_player1_index - 1) % _character_count
+			_player1_index = (_player1_index + change) % _character_count
 
 		player1_overlay.visible = true	
 		player1_overlay.rect_global_position = character_grid.get_children()[_player1_index].rect_global_position
@@ -85,7 +85,7 @@ func _handle_player_input(player_num: int, change: int):
 		if _player2_index == null:
 			_player2_index = 0
 		else:
-			_player2_index = (_player2_index - 1) % _character_count
+			_player2_index = (_player2_index + change) % _character_count
 
 		player2_overlay.visible = true	
 		player2_overlay.rect_global_position = character_grid.get_children()[_player2_index].rect_global_position
