@@ -4,6 +4,7 @@ export(float) var speed = 40.0
 
 onready var label = $Text
 onready var animation = $AnimationPlayer
+onready var check = false
 
 func _change_scene():
 	# TODO: determine how to fade to black before changing
@@ -19,10 +20,14 @@ func _physics_process(delta):
 	
 	# If label is off screen, it is done
 	print(label.margin_bottom)
-	if label.margin_bottom < 27000:
-		# add bool var to work this section
-		animation.play_backwards("Fade in")
-		print("hi :)")
+	
+	if label.margin_bottom < 29700:
+		check = true
+
+	if check:
+		animation.play("Fade out")
+		yield(get_tree().create_timer(3.0),"timeout") 
+		_change_scene()
 
 func _input(event):
 	"""If there is any input, end the scroll and go to the next scene."""

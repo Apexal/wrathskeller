@@ -75,6 +75,8 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.372549, 0.372549, 0.372549, 1 )
+light_mask = 0
 margin_right = 1000.0
 margin_bottom = 667.0
 texture = ExtResource( 2 )
@@ -99,8 +101,9 @@ Empress Shirley decided to release her iron grip on RPI and step down from her t
 
 However, she will not depart without first enacting her last mandate upon her subjects...
 
-Her Majesty Shirley has summoned you to fight in a last grand tournament called in her honor
-*FREE TUITION* is the promised prize.
+Her Majesty Shirley has summoned YOU  to fight in a LAST GRAND TOURNAMENT called in her honor hosted at good old Wrathskeller!
+
+FREE TUITION is the promised prize...
 
 Will you rise to the occasion?"
 align = 1
