@@ -149,4 +149,5 @@ align = 1
 valign = 1
 
 [connection signal="pressed" from="Buttons/Testing" to="." method="_on_TestingButton_pressed"]
+[connection signal="pressed" from="Buttons/Controls" to="." method="_on_Controls_pressed"]
 [connection signal="pressed" from="Buttons/Quit" to="." method="_on_QuitButton_pressed"]
