@@ -7,7 +7,7 @@ onready var animation = $AnimationPlayer
 onready var check = false
 
 func _change_scene():
-	# TODO: determine how to fade to black before changing
+	# TODO: determine how to fade to black before changing- DONE
 	get_tree().change_scene("res://src/scenes/menu/Menu.tscn")
 
 func _ready():
@@ -18,9 +18,7 @@ func _physics_process(delta):
 	# Move label up by speed
 	label.rect_position = Vector2(label.rect_position.x, label.rect_position.y - speed * delta)
 	
-	# If label is off screen, it is done
-	print(label.margin_bottom)
-	
+	# If label is off screen, it is done	
 	if label.margin_bottom < 29700:
 		check = true
 
