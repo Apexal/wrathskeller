@@ -9,9 +9,7 @@ func _ready():
 	first_focus.grab_focus()
 
 func _on_TestingButton_pressed():
-	CharacterManager.player1 = "character.wrath"
-	CharacterManager.player2 = "character2.wrath"
-	get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
+	get_tree().change_scene("res://src/scenes/characters/select_characters/SelectCharacters.tscn")
 
 func _on_QuitButton_pressed():
 	# Quit the game

@@ -153,16 +153,19 @@ func _on_character_request_completed(result, response_code, headers, body):
 	if response_code == 200:
 		var json = JSON.parse(body.get_string_from_utf8())
 		var character_data = json.result
-		print(character_data["id"], ": ", character_data["name"])
+		
+		print("Fetched character ", character_data["id"], ": ", character_data["name"])
+		
 		var file = File.new()
 		file.open("res://test_characters/" + character_data["id"] + ".wrath", File.WRITE)
 		file.store_string(body.get_string_from_utf8())
 		file.close()
 		
+		character_id_input.text = ""
+		
 		_setup_character_grid()
 	else:
 		print("Error: ", response_code)
-		print(body)
 
 
 func _on_AddCharacter_pressed():
