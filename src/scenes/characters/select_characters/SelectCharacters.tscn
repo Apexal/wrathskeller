@@ -57,12 +57,34 @@ align = 1
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
 margin_top = 93.0
 margin_right = 824.0
-margin_bottom = 400.0
+margin_bottom = 365.0
 size_flags_vertical = 3
 columns = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Controls" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 369.0
+margin_right = 824.0
+margin_bottom = 400.0
+size_flags_horizontal = 3
+
+[node name="NewCharacterIdLineEdit" type="LineEdit" parent="VBoxContainer/Controls"]
+margin_right = 733.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+max_length = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AddCharacter" type="Button" parent="VBoxContainer/Controls"]
+margin_left = 737.0
+margin_right = 824.0
+margin_bottom = 31.0
+size_flags_vertical = 3
+text = "Add Character"
 
 [node name="Player1Overlay" type="TextureRect" parent="."]
 visible = false
@@ -73,3 +95,7 @@ margin_bottom = 200.0
 visible = false
 margin_right = 200.0
 margin_bottom = 200.0
+
+[node name="CharacterHTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="VBoxContainer/Controls/AddCharacter" to="." method="_on_AddCharacter_pressed"]

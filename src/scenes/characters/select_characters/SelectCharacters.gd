@@ -1,6 +1,6 @@
 extends Control
 
-export(Vector2) var character_texture_size := Vector2(200, 200)
+export(Vector2) var character_texture_size := Vector2(100, 100)
 export(Texture) var player1_overlay_texture
 export(Texture) var player1_overlay_selected_texture
 export(Texture) var player2_overlay_texture
@@ -10,6 +10,9 @@ onready var player1_overlay = $Player1Overlay
 onready var player2_overlay = $Player2Overlay
 onready var character_grid = $VBoxContainer/GridContainer
 
+onready var character_http = $CharacterHTTPRequest
+onready var character_id_input = $VBoxContainer/Controls/NewCharacterIdLineEdit
+
 var _character_files
 var _character_count := 0
 
@@ -17,6 +20,7 @@ var _is_player1_selected := false
 var _is_player2_selected := false
 var _player1_index = null
 var _player2_index = null
+
 
 func _generate_animated_texture(character_data: Dictionary, size: Vector2) -> AnimatedTexture:
 	"""Given a character dictionary, generates an AnimatedTexture of the character's idle animation in the given size."""
@@ -34,9 +38,14 @@ func _generate_animated_texture(character_data: Dictionary, size: Vector2) -> An
 	anim_texture.frames = frame_index + 1
 	return anim_texture
 
-func _ready():
+func _setup_character_grid():
 	CharacterManager.player1 = null
 	CharacterManager.player2 = null
+	
+	_is_player1_selected = false
+	_is_player2_selected = false
+	_player1_index = null
+	_player2_index = null
 
 	player1_overlay.texture = player1_overlay_texture
 	player1_overlay.expand = true
@@ -45,7 +54,10 @@ func _ready():
 	player2_overlay.texture = player2_overlay_texture
 	player2_overlay.expand = true
 	player2_overlay.rect_size = character_texture_size
-
+	
+	for n in character_grid.get_children():
+		character_grid.remove_child(n)
+	
 	# Iterate through character files
 	_character_files = CharacterManager.list_character_files()
 	_character_count = _character_files.size()
@@ -70,6 +82,12 @@ func _ready():
 		texture_rect.add_child(audio_player2)
 
 		character_grid.add_child(texture_rect)
+
+func _ready():
+	character_http.connect("request_completed", self, "_on_character_request_completed")
+	
+	_setup_character_grid()
+	
 
 func _handle_player_input(player_num: int, change: int):
 	if player_num == 1:
@@ -127,3 +145,25 @@ func _process(delta):
 	if CharacterManager.player1 and CharacterManager.player2:
 		yield(get_tree().create_timer(2.0), "timeout")
 		get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
+
+func _on_character_request_completed(result, response_code, headers, body):
+	"""Given the result of the character request, either store it locally and refresh the character grid,
+	or display an error message."""
+	
+	if response_code == 200:
+		var json = JSON.parse(body.get_string_from_utf8())
+		var character_data = json.result
+		print(character_data["id"], ": ", character_data["name"])
+		var file = File.new()
+		file.open("res://test_characters/" + character_data["id"] + ".wrath", File.WRITE)
+		file.store_string(body.get_string_from_utf8())
+		file.close()
+		
+		_setup_character_grid()
+	else:
+		print("Error: ", response_code)
+		print(body)
+
+
+func _on_AddCharacter_pressed():
+	character_http.request("http://127.0.0.1:8000/characters/" + character_id_input.text)
