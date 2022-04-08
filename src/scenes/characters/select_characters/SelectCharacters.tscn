@@ -75,6 +75,7 @@ margin_right = 733.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 max_length = 5
+placeholder_text = "Enter in a character ID from Wrathspriter to add your character!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -98,4 +99,5 @@ margin_bottom = 200.0
 
 [node name="CharacterHTTPRequest" type="HTTPRequest" parent="."]
 
+[connection signal="text_changed" from="VBoxContainer/Controls/NewCharacterIdLineEdit" to="." method="_on_NewCharacterIdLineEdit_text_changed"]
 [connection signal="pressed" from="VBoxContainer/Controls/AddCharacter" to="." method="_on_AddCharacter_pressed"]

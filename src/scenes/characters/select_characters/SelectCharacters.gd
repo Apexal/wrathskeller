@@ -12,6 +12,7 @@ onready var character_grid = $VBoxContainer/GridContainer
 
 onready var character_http = $CharacterHTTPRequest
 onready var character_id_input = $VBoxContainer/Controls/NewCharacterIdLineEdit
+var character_id_regex = RegEx.new()
 
 var _character_files
 var _character_count := 0
@@ -84,6 +85,7 @@ func _setup_character_grid():
 		character_grid.add_child(texture_rect)
 
 func _ready():
+	character_id_regex.compile("[^A-Z]")
 	character_http.connect("request_completed", self, "_on_character_request_completed")
 	
 	_setup_character_grid()
@@ -169,4 +171,11 @@ func _on_character_request_completed(result, response_code, headers, body):
 
 
 func _on_AddCharacter_pressed():
-	character_http.request("http://127.0.0.1:8000/characters/" + character_id_input.text)
+	if len(character_id_input.text) > 0:
+		character_http.request("http://127.0.0.1:8000/characters/" + character_id_input.text)
+
+
+func _on_NewCharacterIdLineEdit_text_changed(new_text: String):
+	"""Only allow alphabetical characters in uppercase"""
+	character_id_input.text = character_id_regex.sub(new_text.to_upper(), "", true)
+	character_id_input.caret_position = len(character_id_input.text)
