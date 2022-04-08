@@ -1,0 +1,120 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/scenes/title_scroll/TitleScroll.gd" type="Script" id=1]
+[ext_resource path="res://src/assets/backgrounds/rathskellar_blur_bg.jpg" type="Texture" id=2]
+[ext_resource path="res://src/assets/fonts/scroll_font.tres" type="DynamicFont" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Fade in"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0.772549, 0.772549, 0.772549, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Fade out"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.772549, 0.772549, 0.772549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_change_scene"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[node name="TitleScroll" type="Control"]
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.372549, 0.372549, 0.372549, 1 )
+light_mask = 0
+margin_right = 1000.0
+margin_bottom = 667.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="Label" parent="."]
+anchor_right = 1.0
+margin_left = 80.0
+margin_top = 40.0
+margin_right = -100.0
+margin_bottom = 1310.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+text = "*The year is 2021*
+
+Not so long ago in a small village upstate not so far away...
+
+Empress Shirley decided to release her iron grip on RPI and step down from her throne.
+
+However, she will not depart without first enacting her last mandate upon her subjects...
+
+Her Majesty Shirley has summoned YOU  to fight in a LAST GRAND TOURNAMENT called in her honor hosted at good old Wrathskellar!
+
+FREE TUITION is the promised prize...
+
+Will you rise to the occasion?"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+"anims/Fade in" = SubResource( 1 )
+"anims/Fade out" = SubResource( 3 )
+anims/RESET = SubResource( 2 )
