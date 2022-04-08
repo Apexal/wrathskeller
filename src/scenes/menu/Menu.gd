@@ -13,6 +13,12 @@ func _on_TestingButton_pressed():
 	CharacterManager.player2 = "character2.wrath"
 	get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
 
+func _on_Controls_pressed():
+	get_tree().change_scene("res://src/scenes/controls/Controls.tscn")
+	
 func _on_QuitButton_pressed():
 	# Quit the game
 	get_tree().quit()
+
+
+
