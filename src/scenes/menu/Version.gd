@@ -2,7 +2,7 @@ extends Panel
 
 
 # Declare member variables here. Examples:
-var versionNum = 1.0
+var versionNum = 1.1
 # var b = "text"
 
 
