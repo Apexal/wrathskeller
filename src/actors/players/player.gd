@@ -7,9 +7,10 @@ var player_number := 1
 
 onready var _actions := $Actions.get_children() # Loads actions from nodes
 
-enum MOVE_STATE {IDLING, WALKING, DASHING, JUMPING, CROUCHING, BLOCKING}
-var _current_move_state: int = MOVE_STATE.IDLING
-var _last_move_state: int = MOVE_STATE.IDLING
+enum MOVE_STATE {IDLE, ENTER, WALK, DASH, JUMP, CROUCH, BLOCK, GRAPPLED, HURT, WIN, LOSE}
+
+var _current_move_state: int = MOVE_STATE.IDLE
+var _last_move_state: int = MOVE_STATE.IDLE
 
 const NO_ACTION = -1
 var _current_action_index := NO_ACTION
@@ -77,42 +78,44 @@ func _determine_movement(input_dir: Vector2) -> void:
 		return
 
 	if input_dir.y == -1: # If attempting to JUMP
-		if _current_move_state != MOVE_STATE.CROUCHING:
+		if _current_move_state != MOVE_STATE.CROUCH:
 			# Only jump if not crouching
 			_velocity.y = input_dir.y * speed.y
-			_current_move_state = MOVE_STATE.JUMPING
+			_current_move_state = MOVE_STATE.JUMP
 	elif input_dir.y == 1:
 		# Otherwise, if attempting to crouch
 		# only crouch if not jumping, or landing from a jump
-		if _current_move_state != MOVE_STATE.JUMPING or (_current_move_state == MOVE_STATE.JUMPING and is_on_floor()):
-			_current_move_state = MOVE_STATE.CROUCHING
+		if _current_move_state != MOVE_STATE.JUMP or (_current_move_state == MOVE_STATE.JUMP and is_on_floor()):
+			_current_move_state = MOVE_STATE.CROUCH
 			_velocity.x = 0.0
 	else:
 		# If mid-air, can't change velocity
-		if _current_move_state == MOVE_STATE.JUMPING and not is_on_floor():
+		if _current_move_state == MOVE_STATE.JUMP and not is_on_floor():
 			return
 		
 		# Apply movement and idle
 		if input_dir.x != 0.0:
 			_velocity.x = input_dir.x * speed.x
-			_current_move_state = MOVE_STATE.WALKING
+			_current_move_state = MOVE_STATE.WALK
 		else:
 			_velocity.x = 0.0
-			_current_move_state = MOVE_STATE.IDLING
+			_current_move_state = MOVE_STATE.IDLE
 
 func _determine_animation(move_state: int, action_index: int) -> void:
 	"""Based on the previous state and current state, travel to the proper animation state."""
 	if _is_alive:
 		if action_index != NO_ACTION: 
 			state_machine.travel(_actions[action_index].animation_name)
-		elif move_state == MOVE_STATE.IDLING:
-			state_machine.travel("idle")
-		elif move_state == MOVE_STATE.WALKING:
-			state_machine.travel("walk")
-		elif move_state == MOVE_STATE.CROUCHING:
-			state_machine.travel("crouch")
-		elif move_state == MOVE_STATE.JUMPING:
-			state_machine.travel("jump")
+		else:
+			state_machine.travel(CharacterManager.STATES[move_state])
+#		elif move_state == MOVE_STATE.IDLE:
+#			state_machine.travel("idle")
+#		elif move_state == MOVE_STATE.WALK:
+#			state_machine.travel("walk")
+#		elif move_state == MOVE_STATE.CROUCH:
+#			state_machine.travel("crouch")
+#		elif move_state == MOVE_STATE.JUMPING:
+#			state_machine.travel("jump")
 	else:
 		state_machine.travel("lose")		
 
