@@ -1,19 +1,7 @@
 extends Actor
 
-onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-
 # Player selection variables
 var player_number := 1
-
-onready var _actions := $Actions.get_children() # Loads actions from nodes
-
-enum MOVE_STATE {IDLE, ENTER, WALK, DASH, JUMP, CROUCH, BLOCK, GRAPPLED, HURT, WIN, LOSE}
-
-var _current_move_state: int = MOVE_STATE.IDLE
-var _last_move_state: int = MOVE_STATE.IDLE
-
-const NO_ACTION = -1
-var _current_action_index := NO_ACTION
 
 func _ready() -> void:
 	print("Player {player_number} ({name}): Recognized {action_count} actions".format({
@@ -53,72 +41,6 @@ func _determine_action() -> void:
 				_start_action(i)
 				break # No need to continue looping
 
-func _start_action(action_index: int):
-	"""Start an action, wait for it to complete, and end the action. Also plays action sound effect if applicable."""
-	_current_action_index = action_index
-	
-	# If an audio stream is set, play it
-	if _actions[_current_action_index].sound_effect:
-		$AudioStreamPlayer.stream = _actions[_current_action_index].sound_effect
-		$AudioStreamPlayer.play()
-	
-	# Wait till the action is complete
-	yield(get_tree().create_timer(_actions[action_index].action_time), "timeout")
-	
-	# Reset so no action is set now
-	_current_action_index = NO_ACTION
-
-func _determine_movement(input_dir: Vector2) -> void:
-	"""Given the current input direction and current move state, apply the proper move state and velocity."""
-
-	if _current_action_index != NO_ACTION:
-		# Prevent moving when performing action unless midair
-		if is_on_floor():
-			_velocity.x = 0		
-		return
-
-	if input_dir.y == -1: # If attempting to JUMP
-		if _current_move_state != MOVE_STATE.CROUCH:
-			# Only jump if not crouching
-			_velocity.y = input_dir.y * speed.y
-			_current_move_state = MOVE_STATE.JUMP
-	elif input_dir.y == 1:
-		# Otherwise, if attempting to crouch
-		# only crouch if not jumping, or landing from a jump
-		if _current_move_state != MOVE_STATE.JUMP or (_current_move_state == MOVE_STATE.JUMP and is_on_floor()):
-			_current_move_state = MOVE_STATE.CROUCH
-			_velocity.x = 0.0
-	else:
-		# If mid-air, can't change velocity
-		if _current_move_state == MOVE_STATE.JUMP and not is_on_floor():
-			return
-		
-		# Apply movement and idle
-		if input_dir.x != 0.0:
-			_velocity.x = input_dir.x * speed.x
-			_current_move_state = MOVE_STATE.WALK
-		else:
-			_velocity.x = 0.0
-			_current_move_state = MOVE_STATE.IDLE
-
-func _determine_animation(move_state: int, action_index: int) -> void:
-	"""Based on the previous state and current state, travel to the proper animation state."""
-	if _is_alive:
-		if action_index != NO_ACTION: 
-			state_machine.travel(_actions[action_index].animation_name)
-		else:
-			state_machine.travel(CharacterManager.STATES[move_state])
-#		elif move_state == MOVE_STATE.IDLE:
-#			state_machine.travel("idle")
-#		elif move_state == MOVE_STATE.WALK:
-#			state_machine.travel("walk")
-#		elif move_state == MOVE_STATE.CROUCH:
-#			state_machine.travel("crouch")
-#		elif move_state == MOVE_STATE.JUMPING:
-#			state_machine.travel("jump")
-	else:
-		state_machine.travel("lose")		
-
 func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
 
@@ -126,7 +48,7 @@ func _process(delta: float) -> void:
 	_determine_movement(input_direction)
 	_determine_animation(_current_move_state, _current_action_index)
 
-	$State.text = "Move: " + String(_current_move_state)
+	$State.text = "State: " + String(_current_move_state)
 	$Action.text = "Action: " + String(_current_action_index)
 	$Health.text = "Health: " + String(_health)
 

@@ -91,7 +91,7 @@ static func generate_animation(anim_name: String, frames: Array, frame_index: in
 	var anim_length := 0.0
 	for frame in frames:
 		animation.track_insert_key(frame_track_index, anim_length, frame_index)
-		
+
 		var body_coll_size := Vector2(frame["bodyCollider"]["size"]["x"], frame["bodyCollider"]["size"]["y"])
 		var body_coll_pos := Vector2(frame["bodyCollider"]["position"]["x"], frame["bodyCollider"]["position"]["y"])
 		animation.track_insert_key(body_collider_extents_track_index, anim_length, body_coll_size)
