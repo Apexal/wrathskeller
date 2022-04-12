@@ -10,10 +10,11 @@ var player2 = null
 
 const character_template = preload("res://src/actors/players/CharacterTemplate.tscn")
 
-# The recognized state animations in the exact ORDER they must be processed in
+# The recognized character state in the exact ORDER they must be processed in
 # This order ensures the spritesheet can be generated in sync with the animation tree
-const state_animation_names = [
+const STATES = [
 	"idle",
+	"enter",
 	"walk",
 	"dash",
 	"jump",
@@ -90,7 +91,7 @@ static func generate_animation(anim_name: String, frames: Array, frame_index: in
 	var anim_length := 0.0
 	for frame in frames:
 		animation.track_insert_key(frame_track_index, anim_length, frame_index)
-		
+
 		var body_coll_size := Vector2(frame["bodyCollider"]["size"]["x"], frame["bodyCollider"]["size"]["y"])
 		var body_coll_pos := Vector2(frame["bodyCollider"]["position"]["x"], frame["bodyCollider"]["position"]["y"])
 		animation.track_insert_key(body_collider_extents_track_index, anim_length, body_coll_size)
@@ -136,7 +137,7 @@ static func create_character(character_data: Dictionary):
 	var frame_index := 0
 	
 	# Create state animations
-	for state in state_animation_names:
+	for state in STATES:
 		var anim_name: String = state
 		
 		var animation_result := generate_animation(anim_name, character_data["stateAnimations"][state], frame_index)
@@ -215,7 +216,7 @@ static func generate_character_sprite_sheet(character_data: Dictionary) -> Dicti
 	var state_frame_count := 0
 	var action_frame_count := 0
 	
-	for state in state_animation_names:
+	for state in STATES:
 		frame_count += len(character_data["stateAnimations"][state])
 		state_frame_count += len(character_data["stateAnimations"][state])
 	
@@ -232,7 +233,7 @@ static func generate_character_sprite_sheet(character_data: Dictionary) -> Dicti
 
 	# Copy each frame into the spritesheet image
 	var frame_index = 0
-	for state in state_animation_names:
+	for state in STATES:
 		for frame in character_data["stateAnimations"][state]:
 			var frame_texture := frame_to_texture(frame, Vector2(frame_size, frame_size))
 			var frame_image := frame_texture.get_data()
