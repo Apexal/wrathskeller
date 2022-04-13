@@ -9,6 +9,7 @@ func _ready() -> void:
 		"player_number": player_number,
 		"action_count": len(_actions)
 	}))
+	print(_state_sound_effects)
 
 func _player_input(input_name: String) -> String:
 	"""Returns the input prefix for this player for a particular input."""

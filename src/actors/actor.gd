@@ -24,6 +24,8 @@ var _health := max_health
 var _is_alive := true # Always check this before doing things!
 var _damage_knockback := Vector2(100, -500)
 
+var _state_sound_effects := {}
+
 var _velocity := Vector2.ZERO # Movement velocity
 
 var target_to_face: KinematicBody2D # If set, will always face this body

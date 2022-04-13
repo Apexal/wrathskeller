@@ -155,6 +155,14 @@ static func create_character(character_data: Dictionary):
 			var transition := AnimationNodeStateMachineTransition.new()
 			state_machine.add_transition(anim_name, "idle", transition)
 			state_machine.add_transition("idle", anim_name, transition)
+		
+		# State sound effects
+		if state in character_data["stateSoundEffects"]:
+			var state_audio_streams = []
+			for sfx in character_data["stateSoundEffects"][state]:
+				var audio_stream := b64_to_audio_stream_mp3(sfx["base64EncodedAudio"])
+				state_audio_streams.append(audio_stream)
+			character_root._state_sound_effects[state] = state_audio_streams
 	
 	state_machine.set_start_node("idle") # Make idle autoplay
 	
