@@ -8,12 +8,14 @@ extends KinematicBody2D
 
 signal health_changed
 signal died
+signal entered
 
 const FLOOR_NORMAL = Vector2.UP # The direction of the floor, for move_and_slide
 
 var speed := Vector2(150.0, 850.0) # x is walk speed, y is jump speed
 var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity"))
 var max_health := 100.0
+var is_frozen := false
 
 # TODO: Use
 const DAMAGE_COOL_DOWN := 0.5 # How many seconds after being damaged are you invincible
@@ -37,9 +39,18 @@ var _current_action_index := NO_ACTION
 # Must be kept in same order as STATES array in CharacterManager
 enum MOVE_STATE {IDLE, ENTER, WALK, DASH, JUMP, CROUCH, BLOCK, GRAPPLED, HURT, WIN, LOSE}
 
-var _current_move_state: int = MOVE_STATE.ENTER
-var _last_move_state: int = MOVE_STATE.ENTER
+var _current_move_state: int = MOVE_STATE.IDLE
+var _last_move_state: int = MOVE_STATE.IDLE
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+
+func enter() -> void:
+	"""Freeze the character and perform their enter animation"""
+	# TODO: pause until done, not just 5 seconds
+	_current_move_state = MOVE_STATE.ENTER
+	is_frozen = true
+	yield(get_tree().create_timer(5), "timeout")
+	is_frozen = false
+	emit_signal("entered")
 
 func take_damage(damage_amount: float) -> float:
 	"""
@@ -104,7 +115,7 @@ func _start_action(action_index: int):
 	# Reset so no action is set now
 	_current_action_index = NO_ACTION
 
-func _determine_movement(input_dir: Vector2) -> void:
+func _determine_move_state(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
 
 	if _current_action_index != NO_ACTION:
@@ -113,7 +124,7 @@ func _determine_movement(input_dir: Vector2) -> void:
 			_velocity.x = 0		
 		return
 	
-	if _current_move_state == MOVE_STATE.HURT:
+	if _current_move_state == MOVE_STATE.HURT or is_frozen:
 		return
 	
 	if input_dir.y == -1: # If attempting to JUMP

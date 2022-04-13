@@ -19,3 +19,10 @@ func _ready():
 	if CharacterManager.player1 and CharacterManager.player2:
 		player1.target_to_face = player2
 		player2.target_to_face = player1
+	
+	player1.is_frozen = true
+	player2.is_frozen = true
+	
+	player1.enter()
+	yield(player1, "entered")
+	player2.enter()
