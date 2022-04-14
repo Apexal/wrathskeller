@@ -75,6 +75,7 @@ func take_damage(damage_amount: float) -> float:
 		return _health
 	
 	_health -= damage_amount
+	play_state_sfx("hurt")
 	emit_signal("health_changed", _health)
 	
 	# Detect DEATH ;(
