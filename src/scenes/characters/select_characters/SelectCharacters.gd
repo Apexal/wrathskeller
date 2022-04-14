@@ -22,6 +22,7 @@ var _is_player2_selected := false
 var _player1_index = null
 var _player2_index = null
 
+var _finished = false
 
 func _generate_animated_texture(character_data: Dictionary, size: Vector2) -> AnimatedTexture:
 	"""Given a character dictionary, generates an AnimatedTexture of the character's idle animation in the given size."""
@@ -90,7 +91,6 @@ func _ready():
 	
 	_setup_character_grid()
 	
-
 func _handle_player_input(player_num: int, change: int):
 	if player_num == 1:
 		if _player1_index == null:
@@ -144,7 +144,8 @@ func _process(delta):
 		_handle_player_select(2)
 
 	# When both characters are chosen, go to next scene
-	if CharacterManager.player1 and CharacterManager.player2:
+	if not _finished and CharacterManager.player1 and CharacterManager.player2:
+		_finished = true
 		yield(get_tree().create_timer(2.0), "timeout")
 		get_tree().change_scene("res://src/scenes/characters/test_characters/TestCharacters.tscn")
 
@@ -169,11 +170,9 @@ func _on_character_request_completed(result, response_code, headers, body):
 	else:
 		print("Error: ", response_code)
 
-
 func _on_AddCharacter_pressed():
 	if len(character_id_input.text) > 0:
 		character_http.request("http://127.0.0.1:8000/characters/" + character_id_input.text)
-
 
 func _on_NewCharacterIdLineEdit_text_changed(new_text: String):
 	"""Only allow alphabetical characters in uppercase"""

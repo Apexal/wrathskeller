@@ -42,17 +42,22 @@ var _current_action_index := NO_ACTION
 enum MOVE_STATE {IDLE, ENTER, WALK, DASH, JUMP, CROUCH, BLOCK, GRAPPLED, HURT, WIN, LOSE}
 
 var _current_move_state: int = MOVE_STATE.IDLE
-var _last_move_state: int = MOVE_STATE.IDLE
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
 func enter() -> void:
 	"""Freeze the character and perform their enter animation"""
-	# TODO: pause until done, not just 5 seconds
 	_current_move_state = MOVE_STATE.ENTER
 	is_frozen = true
+	play_state_sfx("enter")
+	# TODO: pause until done, not just 5 seconds
 	yield(get_tree().create_timer(5), "timeout")
 	is_frozen = false
 	emit_signal("entered")
+
+func play_state_sfx(state: String):
+	if state in _state_sound_effects:
+		$AudioStreamPlayer.stream = _state_sound_effects[state][randi() % len(_state_sound_effects[state])]
+		$AudioStreamPlayer.play()
 
 func take_damage(damage_amount: float) -> float:
 	"""
@@ -84,11 +89,8 @@ func take_damage(damage_amount: float) -> float:
 	_velocity = _damage_knockback * Vector2(-1, 1) if _is_flipped else _damage_knockback
 	
 	_current_move_state = MOVE_STATE.HURT
-	print("HURT")
 	yield(get_tree().create_timer(DAMAGE_COOL_DOWN), "timeout")
-	print("DONE HURTING")
 	_current_move_state = MOVE_STATE.IDLE
-	
 	
 	return _health
 
