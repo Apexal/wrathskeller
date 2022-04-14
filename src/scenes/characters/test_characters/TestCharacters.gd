@@ -25,4 +25,18 @@ func _ready():
 	
 	player1.enter()
 	yield(player1, "entered")
+	player1._current_move_state = player1.MOVE_STATE.IDLE
 	player2.enter()
+	yield(player2, "entered")
+	
+	player1.is_frozen = false
+	player2.is_frozen = false
+	
+	player1.connect("health_changed", self, "_on_player_health_changed", [1])
+	player2.connect("health_changed", self, "_on_player_health_changed", [2])
+	
+func _on_player_health_changed(health, player_number):
+	if player_number == 1:
+		$Control/HBoxContainer/VBoxContainer/Player1Health.value = health
+	else:
+		$Control/HBoxContainer/VBoxContainer2/Player2Health.value = health

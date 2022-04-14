@@ -6,7 +6,7 @@ Players inherit from Actor, and NPCs would also inherit from Actor.
 class_name Actor
 extends KinematicBody2D
 
-signal health_changed
+signal health_changed(new_health)
 signal died
 signal entered
 
@@ -47,11 +47,9 @@ onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["p
 func enter() -> void:
 	"""Freeze the character and perform their enter animation"""
 	_current_move_state = MOVE_STATE.ENTER
-	is_frozen = true
 	play_state_sfx("enter")
 	# TODO: pause until done, not just 5 seconds
 	yield(get_tree().create_timer(5), "timeout")
-	is_frozen = false
 	emit_signal("entered")
 
 func play_state_sfx(state: String):
