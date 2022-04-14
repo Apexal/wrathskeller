@@ -6,14 +6,16 @@ Players inherit from Actor, and NPCs would also inherit from Actor.
 class_name Actor
 extends KinematicBody2D
 
-signal health_changed
+signal health_changed(new_health)
 signal died
+signal entered
 
 const FLOOR_NORMAL = Vector2.UP # The direction of the floor, for move_and_slide
 
 var speed := Vector2(150.0, 850.0) # x is walk speed, y is jump speed
 var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity"))
 var max_health := 100.0
+var is_frozen := false
 
 # TODO: Use
 const DAMAGE_COOL_DOWN := 0.5 # How many seconds after being damaged are you invincible
@@ -21,6 +23,8 @@ const DAMAGE_COOL_DOWN := 0.5 # How many seconds after being damaged are you inv
 var _health := max_health
 var _is_alive := true # Always check this before doing things!
 var _damage_knockback := Vector2(100, -500)
+
+var _state_sound_effects := {}
 
 var _velocity := Vector2.ZERO # Movement velocity
 
@@ -37,9 +41,21 @@ var _current_action_index := NO_ACTION
 # Must be kept in same order as STATES array in CharacterManager
 enum MOVE_STATE {IDLE, ENTER, WALK, DASH, JUMP, CROUCH, BLOCK, GRAPPLED, HURT, WIN, LOSE}
 
-var _current_move_state: int = MOVE_STATE.ENTER
-var _last_move_state: int = MOVE_STATE.ENTER
+var _current_move_state: int = MOVE_STATE.IDLE
 onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+
+func enter() -> void:
+	"""Freeze the character and perform their enter animation"""
+	_current_move_state = MOVE_STATE.ENTER
+	play_state_sfx("enter")
+	# TODO: pause until done, not just 5 seconds
+	yield(get_tree().create_timer(5), "timeout")
+	emit_signal("entered")
+
+func play_state_sfx(state: String):
+	if state in _state_sound_effects:
+		$AudioStreamPlayer.stream = _state_sound_effects[state][randi() % len(_state_sound_effects[state])]
+		$AudioStreamPlayer.play()
 
 func take_damage(damage_amount: float) -> float:
 	"""
@@ -59,6 +75,7 @@ func take_damage(damage_amount: float) -> float:
 		return _health
 	
 	_health -= damage_amount
+	play_state_sfx("hurt")
 	emit_signal("health_changed", _health)
 	
 	# Detect DEATH ;(
@@ -71,11 +88,8 @@ func take_damage(damage_amount: float) -> float:
 	_velocity = _damage_knockback * Vector2(-1, 1) if _is_flipped else _damage_knockback
 	
 	_current_move_state = MOVE_STATE.HURT
-	print("HURT")
 	yield(get_tree().create_timer(DAMAGE_COOL_DOWN), "timeout")
-	print("DONE HURTING")
 	_current_move_state = MOVE_STATE.IDLE
-	
 	
 	return _health
 
@@ -104,7 +118,7 @@ func _start_action(action_index: int):
 	# Reset so no action is set now
 	_current_action_index = NO_ACTION
 
-func _determine_movement(input_dir: Vector2) -> void:
+func _determine_move_state(input_dir: Vector2) -> void:
 	"""Given the current input direction and current move state, apply the proper move state and velocity."""
 
 	if _current_action_index != NO_ACTION:
@@ -113,7 +127,7 @@ func _determine_movement(input_dir: Vector2) -> void:
 			_velocity.x = 0		
 		return
 	
-	if _current_move_state == MOVE_STATE.HURT:
+	if _current_move_state == MOVE_STATE.HURT or is_frozen:
 		return
 	
 	if input_dir.y == -1: # If attempting to JUMP

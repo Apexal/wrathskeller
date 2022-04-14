@@ -9,6 +9,7 @@ func _ready() -> void:
 		"player_number": player_number,
 		"action_count": len(_actions)
 	}))
+	print(_state_sound_effects)
 
 func _player_input(input_name: String) -> String:
 	"""Returns the input prefix for this player for a particular input."""
@@ -22,7 +23,7 @@ func _get_input_direction() -> Vector2:
 	y+ is crouch
 	y- is jump
 	"""
-	if not _is_alive:
+	if not _is_alive or is_frozen:
 		return Vector2.ZERO
 
 	return Vector2(
@@ -45,7 +46,7 @@ func _process(delta: float) -> void:
 	var input_direction = _get_input_direction()
 
 	_determine_action()
-	_determine_movement(input_direction)
+	_determine_move_state(input_direction)
 	_determine_animation(_current_move_state, _current_action_index)
 
 	$State.text = "State: " + String(_current_move_state)
