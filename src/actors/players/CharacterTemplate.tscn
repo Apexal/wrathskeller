@@ -55,6 +55,7 @@ disabled = true
 [node name="Actions" type="Node" parent="."]
 
 [node name="Action" type="Label" parent="."]
+visible = false
 margin_left = -35.0
 margin_top = -145.395
 margin_right = 5.0
@@ -65,6 +66,7 @@ __meta__ = {
 }
 
 [node name="State" type="Label" parent="."]
+visible = false
 margin_left = -34.0
 margin_top = -166.166
 margin_right = 6.0
@@ -75,6 +77,7 @@ __meta__ = {
 }
 
 [node name="Health" type="Label" parent="."]
+visible = false
 margin_left = -34.0
 margin_top = -183.969
 margin_right = 6.0
