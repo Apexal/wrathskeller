@@ -41,7 +41,16 @@ func _ready():
 	# Connect to health bars
 	player1.connect("health_changed", self, "_on_player_health_changed", [1])
 	player2.connect("health_changed", self, "_on_player_health_changed", [2])
-
+	
+	# Hurt for demo
+	while true:
+		yield(get_tree().create_timer(2), "timeout")
+		if randf() >= 0.5:
+			player1.take_damage(10)
+		else:
+			player2.take_damage(15)
+		
+	
 func _on_player_health_changed(health, player_number):
 	if player_number == 1:
 		$Control/HBoxContainer/VBoxContainer/Player1Health.value = health
